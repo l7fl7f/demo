@@ -1,0 +1,501 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.springboot.c2.dao.SeriesDAO">
+    <resultMap id="BaseResultMap" type="com.springboot.c2.entity.Series">
+        <result column="id" jdbcType="VARCHAR" property="id"/>
+        <result column="code" jdbcType="VARCHAR" property="code"/>
+        <result column="actor_display" jdbcType="VARCHAR" property="actorDisplay"/>
+        <result column="area_limit" jdbcType="VARCHAR" property="areaLimit"/>
+        <result column="awards" jdbcType="VARCHAR" property="awards"/>
+        <result column="compare" jdbcType="VARCHAR" property="compare"/>
+        <result column="content_score" jdbcType="VARCHAR" property="contentScore"/>
+        <result column="control_level" jdbcType="VARCHAR" property="controlLevel"/>
+        <result column="definition_flag" jdbcType="VARCHAR" property="definitionFlag"/>
+        <result column="description" jdbcType="VARCHAR" property="description"/>
+        <result column="director_display" jdbcType="VARCHAR" property="directorDisplay"/>
+        <result column="display_as_last_chance" jdbcType="VARCHAR" property="displayAsLastChance"/>
+        <result column="display_as_new" jdbcType="VARCHAR" property="displayAsNew"/>
+        <result column="distributor" jdbcType="VARCHAR" property="distributor"/>
+        <result column="domain_type" jdbcType="VARCHAR" property="domainType"/>
+        <result column="element_type" jdbcType="VARCHAR" property="elementType"/>
+        <result column="genre" jdbcType="VARCHAR" property="genre"/>
+        <result column="guest" jdbcType="VARCHAR" property="guest"/>
+        <result column="keywords" jdbcType="VARCHAR" property="keywords"/>
+        <result column="k_people" jdbcType="VARCHAR" property="kPeople"/>
+        <result column="language" jdbcType="VARCHAR" property="language"/>
+        <result column="licensing_window_end" jdbcType="VARCHAR" property="licensingWindowEnd"/>
+        <result column="licensing_window_start" jdbcType="VARCHAR" property="licensingWindowStart"/>
+        <result column="macro_vision" jdbcType="VARCHAR" property="macroVision"/>
+        <result column="name" jdbcType="VARCHAR" property="name"/>
+        <result column="opin_charge" jdbcType="VARCHAR" property="opinCharge"/>
+        <result column="order_name" jdbcType="VARCHAR" property="orderName"/>
+        <result column="order_number" jdbcType="VARCHAR" property="orderNumber"/>
+        <result column="org_air_date" jdbcType="VARCHAR" property="orgAirDate"/>
+        <result column="original_country" jdbcType="VARCHAR" property="originalCountry"/>
+        <result column="original_name" jdbcType="VARCHAR" property="originalName"/>
+        <result column="price" jdbcType="VARCHAR" property="price"/>
+        <result column="price_tax_in" jdbcType="VARCHAR" property="priceTaxIn"/>
+        <result column="provider" jdbcType="VARCHAR" property="provider"/>
+        <result column="r_media_code" jdbcType="VARCHAR" property="rMediaCode"/>
+        <result column="recomend_level" jdbcType="VARCHAR" property="recomendLevel"/>
+        <result column="release_year" jdbcType="VARCHAR" property="releaseYear"/>
+        <result column="reporter" jdbcType="VARCHAR" property="reporter"/>
+        <result column="search_name" jdbcType="VARCHAR" property="searchName"/>
+        <result column="series_flag" jdbcType="VARCHAR" property="seriesFlag"/>
+        <result column="sort_name" jdbcType="VARCHAR" property="sortName"/>
+        <result column="source_type" jdbcType="VARCHAR" property="sourceType"/>
+        <result column="status" jdbcType="VARCHAR" property="status"/>
+        <result column="storage_type" jdbcType="VARCHAR" property="storageType"/>
+        <result column="substitle_lang" jdbcType="VARCHAR" property="substitleLang"/>
+        <result column="tags" jdbcType="VARCHAR" property="tags"/>
+        <result column="type" jdbcType="VARCHAR" property="type"/>
+        <result column="use_times" jdbcType="VARCHAR" property="useTimes"/>
+        <result column="view_point" jdbcType="VARCHAR" property="viewPoint"/>
+        <result column="volumn_count" jdbcType="VARCHAR" property="volumnCount"/>
+        <result column="writer_display" jdbcType="VARCHAR" property="writerDisplay"/>
+        <result column="published" jdbcType="VARCHAR" property="published"/>
+        <result column="biz_domain" jdbcType="VARCHAR" property="bizDomain"/>
+        <result column="reserve1" jdbcType="VARCHAR" property="reserve1"/>
+        <result column="reserve2" jdbcType="VARCHAR" property="reserve2"/>
+        <result column="reserve3" jdbcType="VARCHAR" property="reserve3"/>
+        <result column="reserve4" jdbcType="VARCHAR" property="reserve4"/>
+        <result column="reserve5" jdbcType="VARCHAR" property="reserve5"/>
+        <result column="create_time" jdbcType="TIMESTAMP" property="createTime"/>
+        <result column="update_time" jdbcType="TIMESTAMP" property="updateTime"/>
+    </resultMap>
+
+    <sql id="Base_Column_List">
+        id,code,actor_display,area_limit,awards,compare,content_score,control_level,definition_flag,description,
+        director_display,display_as_last_chance,display_as_new,distributor,domain_type,element_type,genre,guest,
+        keywords,k_people,`language`,licensing_window_end,licensing_window_start,macro_vision,`name`,opin_charge,
+        order_name,order_number,org_air_date,original_country,original_name,price,price_tax_in,provider,r_media_code,
+        recomend_level,release_year,reporter,search_name,series_flag,sort_name,source_type,status,storage_type,
+        substitle_lang,tags,`type`,use_times,view_point,volumn_count,writer_display,published,biz_domain,reserve1,
+        reserve2,reserve3,reserve4,reserve5,create_time,update_time
+    </sql>
+
+    <insert id="insert" parameterType="com.springboot.c2.entity.Series">
+        insert into series (id,code,actor_display,area_limit,awards,compare,content_score,control_level,definition_flag,description,
+            director_display,display_as_last_chance,display_as_new,distributor,domain_type,element_type,genre,guest,
+            keywords,k_people,`language`,licensing_window_end,licensing_window_start,macro_vision,`name`,opin_charge,
+            order_name,order_number,org_air_date,original_country,original_name,price,price_tax_in,provider,r_media_code,
+            recomend_level,release_year,reporter,search_name,series_flag,sort_name,source_type,status,storage_type,
+            substitle_lang,tags,`type`,use_times,view_point,volumn_count,writer_display,published,biz_domain,reserve1,
+            reserve2,reserve3,reserve4,reserve5,create_time,update_time)
+        values (#{id,jdbcType=VARCHAR}, #{code,jdbcType=VARCHAR}, #{actorDisplay,jdbcType=VARCHAR}, #{areaLimit,jdbcType=VARCHAR},
+        #{awards,jdbcType=VARCHAR}, #{compare,jdbcType=VARCHAR}, #{contentScore,jdbcType=VARCHAR}, #{controlLevel,jdbcType=VARCHAR},
+        #{definitionFlag,jdbcType=VARCHAR}, #{description,jdbcType=VARCHAR}, #{directorDisplay,jdbcType=VARCHAR},
+        #{displayAsLastChance,jdbcType=VARCHAR}, #{displayAsNew,jdbcType=VARCHAR}, #{distributor,jdbcType=VARCHAR},
+        #{domainType,jdbcType=VARCHAR}, #{elementType,jdbcType=VARCHAR}, #{genre,jdbcType=VARCHAR}, #{guest,jdbcType=VARCHAR},
+        #{keywords,jdbcType=VARCHAR}, #{kPeople,jdbcType=VARCHAR}, #{language,jdbcType=VARCHAR}, #{licensingWindowEnd,jdbcType=VARCHAR},
+        #{licensingWindowStart,jdbcType=VARCHAR}, #{macroVision,jdbcType=VARCHAR}, #{name,jdbcType=VARCHAR}, #{opinCharge,jdbcType=VARCHAR},
+        #{orderName,jdbcType=VARCHAR}, #{orderNumber,jdbcType=VARCHAR}, #{orgAirDate,jdbcType=VARCHAR}, #{originalCountry,jdbcType=VARCHAR},
+        #{originalName,jdbcType=VARCHAR}, #{price,jdbcType=VARCHAR}, #{priceTaxIn,jdbcType=VARCHAR}, #{provider,jdbcType=VARCHAR},
+        #{rMediaCode,jdbcType=VARCHAR}, #{recomendLevel,jdbcType=VARCHAR}, #{releaseYear,jdbcType=VARCHAR}, #{reporter,jdbcType=VARCHAR},
+        #{searchName,jdbcType=VARCHAR}, #{seriesFlag,jdbcType=VARCHAR}, #{sortName,jdbcType=VARCHAR}, #{sourceType,jdbcType=VARCHAR},
+        #{status,jdbcType=VARCHAR}, #{storageType,jdbcType=VARCHAR}, #{substitleLang,jdbcType=VARCHAR}, #{tags,jdbcType=VARCHAR},
+        #{type,jdbcType=VARCHAR}, #{useTimes,jdbcType=VARCHAR}, #{viewPoint,jdbcType=VARCHAR}, #{volumnCount,jdbcType=VARCHAR},
+        #{writerDisplay,jdbcType=VARCHAR}, #{published,jdbcType=VARCHAR}, #{bizDomain,jdbcType=VARCHAR}, #{reserve1,jdbcType=VARCHAR},
+        #{reserve2,jdbcType=VARCHAR}, #{reserve3,jdbcType=VARCHAR}, #{reserve4,jdbcType=VARCHAR}, #{reserve5,jdbcType=VARCHAR},
+        #{createTime,jdbcType=TIMESTAMP}, #{updateTime,jdbcType=TIMESTAMP})
+    </insert>
+
+    <delete id="delete" parameterType="java.lang.String">
+        delete from series where code = #{code,jdbcType=VARCHAR}
+    </delete>
+
+    <select id="selectByCode" parameterType="java.lang.String" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from series
+        where code = #{code,jdbcType=VARCHAR}
+    </select>
+
+    <select id="count" parameterType="com.springboot.c2.utils.ModelSetup" resultType="java.lang.Integer">
+        select count(1) from series
+        <include refid="whereCondition"/>
+    </select>
+
+    <select id="query" parameterType="com.springboot.c2.utils.ModelSetup" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from series
+        <include refid="whereCondition"/>
+    </select>
+
+    <select id="selectAll" resultMap="BaseResultMap" parameterType="com.springboot.c2.utils.ModelSetup">
+        select
+        <include refid="Base_Column_List"/>
+        from series
+        <include refid="whereCondition"/>
+    </select>
+
+    <update id="updateByCode" parameterType="com.springboot.c2.entity.Series">
+        update series
+        <set>
+            <if test="id != null">
+                id = #{id,jdbcType=VARCHAR},
+            </if>
+            <if test="actorDisplay != null">
+                actor_display = #{actorDisplay,jdbcType=VARCHAR},
+            </if>
+            <if test="areaLimit != null">
+                area_limit = #{areaLimit,jdbcType=VARCHAR},
+            </if>
+            <if test="awards != null">
+                awards = #{awards,jdbcType=VARCHAR},
+            </if>
+            <if test="compare != null">
+                compare = #{compare,jdbcType=VARCHAR},
+            </if>
+            <if test="contentScore != null">
+                content_score = #{contentScore,jdbcType=VARCHAR},
+            </if>
+            <if test="controlLevel != null">
+                control_level = #{controlLevel,jdbcType=VARCHAR},
+            </if>
+            <if test="definitionFlag != null">
+                definition_flag = #{definitionFlag,jdbcType=VARCHAR},
+            </if>
+            <if test="description != null">
+                description = #{description,jdbcType=VARCHAR},
+            </if>
+            <if test="directorDisplay != null">
+                director_display = #{directorDisplay,jdbcType=VARCHAR},
+            </if>
+            <if test="displayAsLastChance != null">
+                display_as_last_chance = #{displayAsLastChance,jdbcType=VARCHAR},
+            </if>
+            <if test="displayAsNew != null">
+                display_as_new = #{displayAsNew,jdbcType=VARCHAR},
+            </if>
+            <if test="distributor != null">
+                distributor = #{distributor,jdbcType=VARCHAR},
+            </if>
+            <if test="domainType != null">
+                domain_type = #{domainType,jdbcType=VARCHAR},
+            </if>
+            <if test="elementType != null">
+                element_type = #{elementType,jdbcType=VARCHAR},
+            </if>
+            <if test="genre != null">
+                genre = #{genre,jdbcType=VARCHAR},
+            </if>
+            <if test="guest != null">
+                guest = #{guest,jdbcType=VARCHAR},
+            </if>
+            <if test="keywords != null">
+                keywords = #{keywords,jdbcType=VARCHAR},
+            </if>
+            <if test="kPeople != null">
+                k_people = #{kPeople,jdbcType=VARCHAR},
+            </if>
+            <if test="language != null">
+                `language` = #{language,jdbcType=VARCHAR},
+            </if>
+            <if test="licensingWindowEnd != null">
+                licensing_window_end = #{licensingWindowEnd,jdbcType=VARCHAR},
+            </if>
+            <if test="licensingWindowStart != null">
+                licensing_window_start = #{licensingWindowStart,jdbcType=VARCHAR},
+            </if>
+            <if test="macroVision != null">
+                macro_vision = #{macroVision,jdbcType=VARCHAR},
+            </if>
+            <if test="name != null">
+                `name` = #{name,jdbcType=VARCHAR},
+            </if>
+            <if test="opinCharge != null">
+                opin_charge = #{opinCharge,jdbcType=VARCHAR},
+            </if>
+            <if test="orderName != null">
+                order_name = #{orderName,jdbcType=VARCHAR},
+            </if>
+            <if test="orderNumber != null">
+                order_number = #{orderNumber,jdbcType=VARCHAR},
+            </if>
+            <if test="orgAirDate != null">
+                org_air_date = #{orgAirDate,jdbcType=VARCHAR},
+            </if>
+            <if test="originalCountry != null">
+                original_country = #{originalCountry,jdbcType=VARCHAR},
+            </if>
+            <if test="originalName != null">
+                original_name = #{originalName,jdbcType=VARCHAR},
+            </if>
+            <if test="price != null">
+                price = #{price,jdbcType=VARCHAR},
+            </if>
+            <if test="priceTaxIn != null">
+                price_tax_in = #{priceTaxIn,jdbcType=VARCHAR},
+            </if>
+            <if test="provider != null">
+                provider = #{provider,jdbcType=VARCHAR},
+            </if>
+            <if test="rMediaCode != null">
+                r_media_code = #{rMediaCode,jdbcType=VARCHAR},
+            </if>
+            <if test="recomendLevel != null">
+                recomend_level = #{recomendLevel,jdbcType=VARCHAR},
+            </if>
+            <if test="releaseYear != null">
+                release_year = #{releaseYear,jdbcType=VARCHAR},
+            </if>
+            <if test="reporter != null">
+                reporter = #{reporter,jdbcType=VARCHAR},
+            </if>
+            <if test="searchName != null">
+                search_name = #{searchName,jdbcType=VARCHAR},
+            </if>
+            <if test="seriesFlag != null">
+                series_flag = #{seriesFlag,jdbcType=VARCHAR},
+            </if>
+            <if test="sortName != null">
+                sort_name = #{sortName,jdbcType=VARCHAR},
+            </if>
+            <if test="sourceType != null">
+                source_type = #{sourceType,jdbcType=VARCHAR},
+            </if>
+            <if test="status != null">
+                status = #{status,jdbcType=VARCHAR},
+            </if>
+            <if test="storageType != null">
+                storage_type = #{storageType,jdbcType=VARCHAR},
+            </if>
+            <if test="substitleLang != null">
+                substitle_lang = #{substitleLang,jdbcType=VARCHAR},
+            </if>
+            <if test="tags != null">
+                tags = #{tags,jdbcType=VARCHAR},
+            </if>
+            <if test="type != null">
+                `type` = #{type,jdbcType=VARCHAR},
+            </if>
+            <if test="useTimes != null">
+                use_times = #{useTimes,jdbcType=VARCHAR},
+            </if>
+            <if test="viewPoint != null">
+                view_point = #{viewPoint,jdbcType=VARCHAR},
+            </if>
+            <if test="volumnCount != null">
+                volumn_count = #{volumnCount,jdbcType=VARCHAR},
+            </if>
+            <if test="writerDisplay != null">
+                writer_display = #{writerDisplay,jdbcType=VARCHAR},
+            </if>
+            <if test="published != null">
+                published = #{published,jdbcType=VARCHAR},
+            </if>
+            <if test="bizDomain != null">
+                biz_domain = #{bizDomain,jdbcType=VARCHAR},
+            </if>
+            <if test="reserve1 != null">
+                reserve1 = #{reserve1,jdbcType=VARCHAR},
+            </if>
+            <if test="reserve2 != null">
+                reserve2 = #{reserve2,jdbcType=VARCHAR},
+            </if>
+            <if test="reserve3 != null">
+                reserve3 = #{reserve3,jdbcType=VARCHAR},
+            </if>
+            <if test="reserve4 != null">
+                reserve4 = #{reserve4,jdbcType=VARCHAR},
+            </if>
+            <if test="reserve5 != null">
+                reserve5 = #{reserve5,jdbcType=VARCHAR},
+            </if>
+            <if test="createTime != null">
+                create_time = #{createTime,jdbcType=TIMESTAMP},
+            </if>
+
+            update_time = now()
+        </set>
+        where code = #{code,jdbcType=VARCHAR}
+    </update>
+
+    <sql id="whereCondition">
+        <where>
+            <if test="q.id != null">
+                and id = #{q.id,jdbcType=VARCHAR}
+            </if>
+            <if test="q.code != null">
+                and code = #{q.code,jdbcType=VARCHAR}
+            </if>
+            <if test="q.actorDisplay != null">
+                and actor_display = #{q.actorDisplay,jdbcType=VARCHAR}
+            </if>
+            <if test="q.areaLimit != null">
+                and area_limit = #{q.areaLimit,jdbcType=VARCHAR}
+            </if>
+            <if test="q.awards != null">
+                and awards = #{q.awards,jdbcType=VARCHAR}
+            </if>
+            <if test="q.compare != null">
+                and compare = #{q.compare,jdbcType=VARCHAR}
+            </if>
+            <if test="q.contentScore != null">
+                and content_score = #{q.contentScore,jdbcType=VARCHAR}
+            </if>
+            <if test="q.controlLevel != null">
+                and control_level = #{q.controlLevel,jdbcType=VARCHAR}
+            </if>
+            <if test="q.definitionFlag != null">
+                and definition_flag = #{q.definitionFlag,jdbcType=VARCHAR}
+            </if>
+            <if test="q.description != null">
+                and description = #{q.description,jdbcType=VARCHAR}
+            </if>
+            <if test="q.directorDisplay != null">
+                and director_display = #{q.directorDisplay,jdbcType=VARCHAR}
+            </if>
+            <if test="q.displayAsLastChance != null">
+                and display_as_last_chance = #{q.displayAsLastChance,jdbcType=VARCHAR}
+            </if>
+            <if test="q.displayAsNew != null">
+                and display_as_new = #{q.displayAsNew,jdbcType=VARCHAR}
+            </if>
+            <if test="q.distributor != null">
+                and distributor = #{q.distributor,jdbcType=VARCHAR}
+            </if>
+            <if test="q.domainType != null">
+                and domain_type = #{q.domainType,jdbcType=VARCHAR}
+            </if>
+            <if test="q.elementType != null">
+                and element_type = #{q.elementType,jdbcType=VARCHAR}
+            </if>
+            <if test="q.genre != null">
+                and genre = #{q.genre,jdbcType=VARCHAR}
+            </if>
+            <if test="q.guest != null">
+                and guest = #{q.guest,jdbcType=VARCHAR}
+            </if>
+            <if test="q.keywords != null">
+                and keywords = #{q.keywords,jdbcType=VARCHAR}
+            </if>
+            <if test="q.kPeople != null">
+                and k_people = #{q.kPeople,jdbcType=VARCHAR}
+            </if>
+            <if test="q.language != null">
+                and `language` = #{q.language,jdbcType=VARCHAR}
+            </if>
+            <if test="q.licensingWindowEnd != null">
+                and licensing_window_end = #{q.licensingWindowEnd,jdbcType=VARCHAR}
+            </if>
+            <if test="q.licensingWindowStart != null">
+                and licensing_window_start = #{q.licensingWindowStart,jdbcType=VARCHAR}
+            </if>
+            <if test="q.macroVision != null">
+                and macro_vision = #{q.macroVision,jdbcType=VARCHAR}
+            </if>
+            <if test="q.name != null">
+                and `name` = #{q.name,jdbcType=VARCHAR}
+            </if>
+            <if test="q.opinCharge != null">
+                and opin_charge = #{q.opinCharge,jdbcType=VARCHAR}
+            </if>
+            <if test="q.orderName != null">
+                and order_name = #{q.orderName,jdbcType=VARCHAR}
+            </if>
+            <if test="q.orderNumber != null">
+                and order_number = #{q.orderNumber,jdbcType=VARCHAR}
+            </if>
+            <if test="q.orgAirDate != null">
+                and org_air_date = #{q.orgAirDate,jdbcType=VARCHAR}
+            </if>
+            <if test="q.originalCountry != null">
+                and original_country = #{q.originalCountry,jdbcType=VARCHAR}
+            </if>
+            <if test="q.originalName != null">
+                and original_name = #{q.originalName,jdbcType=VARCHAR}
+            </if>
+            <if test="q.price != null">
+                and price = #{q.price,jdbcType=VARCHAR}
+            </if>
+            <if test="q.priceTaxIn != null">
+                and price_tax_in = #{q.priceTaxIn,jdbcType=VARCHAR}
+            </if>
+            <if test="q.provider != null">
+                and provider = #{q.provider,jdbcType=VARCHAR}
+            </if>
+            <if test="q.rMediaCode != null">
+                and r_media_code = #{q.rMediaCode,jdbcType=VARCHAR}
+            </if>
+            <if test="q.recomendLevel != null">
+                and recomend_level = #{q.recomendLevel,jdbcType=VARCHAR}
+            </if>
+            <if test="q.releaseYear != null">
+                and release_year = #{q.releaseYear,jdbcType=VARCHAR}
+            </if>
+            <if test="q.reporter != null">
+                and reporter = #{q.reporter,jdbcType=VARCHAR}
+            </if>
+            <if test="q.searchName != null">
+                and search_name = #{q.searchName,jdbcType=VARCHAR}
+            </if>
+            <if test="q.seriesFlag != null">
+                and series_flag = #{q.seriesFlag,jdbcType=VARCHAR}
+            </if>
+            <if test="q.sortName != null">
+                and sort_name = #{q.sortName,jdbcType=VARCHAR}
+            </if>
+            <if test="q.sourceType != null">
+                and source_type = #{q.sourceType,jdbcType=VARCHAR}
+            </if>
+            <if test="q.status != null">
+                and status = #{q.status,jdbcType=VARCHAR}
+            </if>
+            <if test="q.storageType != null">
+                and storage_type = #{q.storageType,jdbcType=VARCHAR}
+            </if>
+            <if test="q.substitleLang != null">
+                and substitle_lang = #{q.substitleLang,jdbcType=VARCHAR}
+            </if>
+            <if test="q.tags != null">
+                and tags = #{q.tags,jdbcType=VARCHAR}
+            </if>
+            <if test="q.type != null">
+                and `type` = #{q.type,jdbcType=VARCHAR}
+            </if>
+            <if test="q.useTimes != null">
+                and use_times = #{q.useTimes,jdbcType=VARCHAR}
+            </if>
+            <if test="q.viewPoint != null">
+                and vie_point = #{q.viewPoint,jdbcType=VARCHAR}
+            </if>
+            <if test="q.volumnCount != null">
+                and volumn_count = #{q.volumnCount,jdbcType=VARCHAR}
+            </if>
+            <if test="q.writerDisplay != null">
+                and writer_display = #{q.writerDisplay,jdbcType=VARCHAR}
+            </if>
+            <if test="q.published != null">
+                and published = #{q.published,jdbcType=VARCHAR}
+            </if>
+            <if test="q.bizDomain != null">
+                and biz_domain = #{q.bizDomain,jdbcType=VARCHAR}
+            </if>
+            <if test="q.reserve1 != null">
+                and reserve1 = #{q.reserve1,jdbcType=VARCHAR}
+            </if>
+            <if test="q.reserve2 != null">
+                and reserve2 = #{q.reserve2,jdbcType=VARCHAR}
+            </if>
+            <if test="q.reserve3 != null">
+                and reserve3 = #{q.reserve3,jdbcType=VARCHAR}
+            </if>
+            <if test="q.reserve4 != null">
+                and reserve4 = #{q.reserve4,jdbcType=VARCHAR}
+            </if>
+            <if test="q.reserve5 != null">
+                and reserve5 = #{q.reserve5,jdbcType=VARCHAR}
+            </if>
+            <if test="q.createTime != null">
+                and create_time = #{q.createTime,jdbcType=TIMESTAMP}
+            </if>
+            <if test="q.updateTime != null">
+                and update_time = #{q.updateTime,jdbcType=TIMESTAMP}
+            </if>
+        </where>
+    </sql>
+
+</mapper>

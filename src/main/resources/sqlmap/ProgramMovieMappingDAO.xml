@@ -1,0 +1,107 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.springboot.c2.dao.ProgramMovieMappingDAO">
+    <resultMap id="BaseResultMap" type="com.springboot.c2.entity.ProgramMovieMapping">
+        <result column="id" jdbcType="VARCHAR" property="id"/>
+        <result column="element_type" jdbcType="VARCHAR" property="elementType"/>
+        <result column="movie_code" jdbcType="VARCHAR" property="movieCode"/>
+        <result column="movie_id" jdbcType="VARCHAR" property="movieId"/>
+        <result column="parent_type" jdbcType="VARCHAR" property="parentType"/>
+        <result column="program_code" jdbcType="VARCHAR" property="programCode"/>
+        <result column="program_id" jdbcType="VARCHAR" property="programId"/>
+        <result column="provider" jdbcType="VARCHAR" property="provider"/>
+        <result column="message_id" jdbcType="VARCHAR" property="messageId"/>
+        <result column="status" jdbcType="VARCHAR" property="status"/>
+        <result column="create_time" jdbcType="TIMESTAMP" property="createTime"/>
+        <result column="update_time" jdbcType="TIMESTAMP" property="updateTime"/>
+    </resultMap>
+
+    <sql id="Base_Column_List">
+        id,element_type,movie_code,movie_id,parent_type,program_code,program_id,provider,message_id,status,
+        create_time,update_time
+    </sql>
+
+    <insert id="insert" parameterType="com.springboot.c2.entity.ProgramMovieMapping">
+        insert into program_movie_mapping (id,element_type,movie_code,movie_id,parent_type,program_code,program_id,provider,message_id,status,
+        create_time,update_time)
+        values (#{id,jdbcType=VARCHAR}, #{elementType,jdbcType=VARCHAR}, #{movieCode,jdbcType=VARCHAR}, #{movieId,jdbcType=VARCHAR},
+        #{parentType,jdbcType=VARCHAR}, #{programCode,jdbcType=VARCHAR}, #{programId,jdbcType=VARCHAR}, #{provider,jdbcType=VARCHAR},
+        #{messageId,jdbcType=VARCHAR}, #{status,jdbcType=VARCHAR}, #{createTime,jdbcType=TIMESTAMP}, #{updateTime,jdbcType=TIMESTAMP})
+    </insert>
+
+    <delete id="delete" parameterType="java.util.Map">
+        delete from program_movie_mapping where movie_code = #{movieCode,jdbcType=VARCHAR} and program_code = #{programCode,jdbcType=VARCHAR}
+    </delete>
+
+    <select id="count" parameterType="com.springboot.c2.utils.ModelSetup" resultType="java.lang.Integer">
+        select count(1) from program_movie_mapping
+        <include refid="whereCondition"/>
+    </select>
+
+    <select id="query" parameterType="com.springboot.c2.utils.ModelSetup" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from program_movie_mapping
+        <include refid="whereCondition"/>
+    </select>
+
+    <select id="selectAll" resultMap="BaseResultMap" parameterType="com.springboot.c2.utils.ModelSetup">
+        select
+        <include refid="Base_Column_List"/>
+        from program_movie_mapping
+        <include refid="whereCondition"/>
+    </select>
+
+    <update id="update" parameterType="com.springboot.c2.entity.ProgramMovieMapping">
+        update program_movie_mapping
+        <set>
+            <if test="status != null">
+                status = #{status,jdbcType=VARCHAR},
+            </if>
+            update_time = now()
+        </set>
+        where movie_code = #{movieCode,jdbcType=VARCHAR} and program_code = #{programCode,jdbcType=VARCHAR}
+    </update>
+
+    <sql id="whereCondition">
+        <where>
+            <if test="q.id != null">
+                and id = #{q.id,jdbcType=VARCHAR}
+            </if>
+            <if test="q.elementType != null">
+                and element_type = #{q.elementType,jdbcType=VARCHAR}
+            </if>
+            <if test="q.movieCode != null">
+                and movie_code = #{q.movieCode,jdbcType=VARCHAR}
+            </if>
+            <if test="q.movieId != null">
+                and movie_id = #{q.movieId,jdbcType=VARCHAR}
+            </if>
+            <if test="q.parentType != null">
+                and parent_type = #{q.parentType,jdbcType=VARCHAR}
+            </if>
+            <if test="q.programCode != null">
+                and program_code = #{q.programCode,jdbcType=VARCHAR}
+            </if>
+            <if test="q.programId != null">
+                and program_id = #{q.programId,jdbcType=VARCHAR}
+            </if>
+            <if test="q.provider != null">
+                and provider = #{q.provider,jdbcType=VARCHAR}
+            </if>
+            <if test="q.messageId != null">
+                and message_id = #{q.messageId,jdbcType=VARCHAR}
+            </if>
+            <if test="q.status != null">
+                and status = #{q.status,jdbcType=VARCHAR}
+            </if>
+            <if test="q.createTime != null">
+                and create_time = #{q.createTime,jdbcType=TIMESTAMP}
+            </if>
+            <if test="q.updateTime != null">
+                and update_time = #{q.updateTime,jdbcType=TIMESTAMP}
+            </if>
+        </where>
+    </sql>
+
+</mapper>

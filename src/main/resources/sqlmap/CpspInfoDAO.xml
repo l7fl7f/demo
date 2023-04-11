@@ -1,0 +1,161 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.springboot.c2.dao.CpspInfoDAO">
+    <resultMap id="BaseResultMap" type="com.springboot.c2.entity.CpspInfo">
+        <id column="id" jdbcType="INTEGER" property="id"/>
+        <result column="cp_id" jdbcType="VARCHAR" property="cpId"/>
+        <result column="name" jdbcType="VARCHAR" property="name"/>
+        <result column="address" jdbcType="VARCHAR" property="address"/>
+        <result column="phone" jdbcType="VARCHAR" property="phone"/>
+        <result column="email" jdbcType="VARCHAR" property="email"/>
+        <result column="status" jdbcType="VARCHAR" property="status"/>
+        <result column="callback_url" jdbcType="VARCHAR" property="callBackUrl"/>
+        <result column="create_time" jdbcType="TIMESTAMP" property="createTime"/>
+        <result column="modify_time" jdbcType="TIMESTAMP" property="modifyTime"/>
+    </resultMap>
+
+    <sql id="Base_Column_List">
+    id, cp_id, `name`, address, phone, email, `status`, create_time, modify_time, callback_url
+  </sql>
+
+    <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from cpsp_info
+        where id = #{id,jdbcType=INTEGER}
+    </select>
+
+    <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from cpsp_info
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+
+    <insert id="insert" keyColumn="id" keyProperty="id" parameterType="com.springboot.c2.entity.CpspInfo"
+            useGeneratedKeys="true">
+    insert into cpsp_info (cp_id, `name`, address, 
+      phone, email, `status`, 
+      create_time, modify_time, callback_url)
+    values (#{cpId,jdbcType=VARCHAR}, #{name,jdbcType=VARCHAR}, #{address,jdbcType=VARCHAR}, 
+      #{phone,jdbcType=VARCHAR}, #{email,jdbcType=VARCHAR}, #{status,jdbcType=VARCHAR}, 
+      now(), now(), #{callBackUrl,jdbcType=VARCHAR})
+  </insert>
+
+    <update id="updateByPrimaryKeySelective" parameterType="com.springboot.c2.entity.CpspInfo">
+        update cpsp_info
+        <set>
+            <if test="cpId != null">
+                cp_id = #{cpId,jdbcType=VARCHAR},
+            </if>
+            <if test="name != null">
+                `name` = #{name,jdbcType=VARCHAR},
+            </if>
+            <if test="address != null">
+                address = #{address,jdbcType=VARCHAR},
+            </if>
+            <if test="phone != null">
+                phone = #{phone,jdbcType=VARCHAR},
+            </if>
+            <if test="email != null">
+                email = #{email,jdbcType=VARCHAR},
+            </if>
+            <if test="callBackUrl != null">
+                callback_url = #{callBackUrl,jdbcType=VARCHAR},
+            </if>
+            modify_time = now(),
+        </set>
+        where id = #{id,jdbcType=INTEGER}
+    </update>
+
+    <update id="updateStatus" parameterType="java.util.Map">
+        update cpsp_info
+        <set>
+            <if test="status != null and status != ''">
+                status = #{status,jdbcType=VARCHAR},
+            </if>
+            modify_time = now(),
+        </set>
+        where id = #{id,jdbcType=INTEGER}
+    </update>
+
+    <sql id="whereCondition">
+        <where>
+            <if test="q.cpId != null and q.cpId != ''">
+                and cp_id = #{q.cpId,jdbcType=VARCHAR}
+            </if>
+            <if test="q.name != null and q.name != ''">
+                and `name` = #{q.name,jdbcType=VARCHAR}
+            </if>
+            <if test="q.address != null">
+                and address = #{q.address,jdbcType=VARCHAR}
+            </if>
+            <if test="q.phone != null">
+                and phone = #{q.phone,jdbcType=VARCHAR}
+            </if>
+            <if test="q.email != null">
+                and email = #{q.email,jdbcType=VARCHAR}
+            </if>
+            <if test="q.status != null">
+                and `status` = #{q.status,jdbcType=VARCHAR}
+            </if>
+            <if test="q.createTime != null">
+                and create_time = #{q.createTime,jdbcType=TIMESTAMP}
+            </if>
+            <if test="q.modifyTime != null">
+                and modify_time = #{q.modifyTime,jdbcType=TIMESTAMP}
+            </if>
+            <if test="q.callBackUrl != null">
+                and callback_url = #{q.callBackUrl,jdbcType=VARCHAR}
+            </if>
+        </where>
+    </sql>
+
+    <select id="query" parameterType="com.springboot.c2.utils.ModelSetup" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from cpsp_info
+        <include refid="whereCondition"/>
+    </select>
+
+    <select id="count" parameterType="com.springboot.c2.utils.ModelSetup" resultType="java.lang.Integer">
+        select count(1) from cpsp_info
+        <include refid="whereCondition"/>
+    </select>
+
+    <select id="selectAll" resultMap="BaseResultMap" parameterType="com.springboot.c2.utils.ModelSetup">
+        select
+        <include refid="Base_Column_List"/>
+        from cpsp_info
+        <include refid="whereCondition"/>
+    </select>
+
+    <select id="findByStatus" resultMap="BaseResultMap" parameterType="java.lang.String">
+        select
+        <include refid="Base_Column_List"/>
+        from cpsp_info
+        where status = #{status}
+    </select>
+
+    <select id="fingByCpIdOrName" resultMap="BaseResultMap" parameterType="java.util.Map">
+        select
+        <include refid="Base_Column_List"/>
+        from cpsp_info
+        where cp_id = #{cpId,jdbcType=VARCHAR}
+        or `name` = #{name,jdbcType=VARCHAR}
+    </select>
+    <select id="selectByCpIds" resultType="com.springboot.c2.entity.CpspInfo">
+        select
+        <include refid="Base_Column_List"/>
+        from cpsp_info
+        where cp_id in
+        <foreach item="id" index="index" collection="array" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </select>
+
+    <delete id="deleteByPrimaryKeys" parameterType="java.lang.Integer">
+        delete from cpsp_info where id in
+        <foreach item="id" index="index" collection="array" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </delete>
+</mapper>

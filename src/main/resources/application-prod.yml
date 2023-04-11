@@ -1,0 +1,47 @@
+server:
+  port: 9999
+  servlet:
+    context-path: /
+  tomcat:
+    uri-encoding: UTF-8
+    accesslog:
+      directory: /syiptv/iptvirs_task/logs/tomcat
+      enabled: true
+      pattern: '%h %l %u %t "%r" %s %b %Dms'
+
+spring:
+  profiles:
+    include: db,mybatis
+  swagger:
+    enabled: true
+    title: 接口可视化
+    security:
+      filter-plugin: true
+      username: staryea
+      password: 1
+  data:
+    mongodb:
+      uri: mongodb://root:JSDX_2020@172.16.108.51:27017/iossdb
+  #      uri: mongodb://epg:SCdx_2018@172.16.22.68:27017/test
+
+logging:
+  config: config/logback.xml
+
+staryea:
+  logging:
+    logType: 2
+  threadPool: #线程池配置
+    corePoolSize: 5 #核心线程数
+    maxPoolSize: 10 #最大线程数
+    queueCapacity: 500 #队列大小
+    threadNamePrefix: iptv-thread- #线程池中的线程的名称前缀
+    keepAliveSeconds: 60 #线程池维护线程所允许的空闲时间
+
+# Elasticsearch配置
+elasticsearch:
+  hostname: 172.16.108.51
+  port: 9200
+  index: content
+  type: userTag
+  username: admin
+  password: StaryeaLMUHCFBA!#@550

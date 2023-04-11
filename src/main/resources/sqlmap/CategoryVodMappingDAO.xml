@@ -1,0 +1,217 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.springboot.c2.dao.CategoryVodMappingDAO">
+    <resultMap id="BaseResultMap" type="com.springboot.c2.entity.CategoryVodMapping">
+        <id column="id" jdbcType="INTEGER" property="id"/>
+        <result column="category_id" jdbcType="VARCHAR" property="categoryId"/>
+        <result column="category_code" jdbcType="VARCHAR" property="categoryCode"/>
+        <result column="media_id" jdbcType="VARCHAR" property="mediaId"/>
+        <result column="media_code" jdbcType="VARCHAR" property="mediaCode"/>
+        <result column="sequence" jdbcType="VARCHAR" property="sequence"/>
+        <result column="create_time" jdbcType="TIMESTAMP" property="createTime"/>
+        <result column="modify_time" jdbcType="TIMESTAMP" property="modifyTime"/>
+        <!-- mediavod属性 -->
+        <result column="title" jdbcType="VARCHAR" property="title"/>
+        <result column="meta_id" jdbcType="VARCHAR" property="metaId"/>
+        <result column="type" jdbcType="VARCHAR" property="type"/>
+        <result column="definition_flag" jdbcType="VARCHAR" property="definitionFlag"/>
+        <result column="vodId" jdbcType="INTEGER" property="vodId"/>
+    </resultMap>
+    <sql id="Base_Column_List">
+    mapping.id, mapping.category_id, mapping.category_code, mapping.media_id, mapping.media_code,mapping.sequence,mapping.create_time,mapping.modify_time,
+    vod.type, vod.definition_flag, vod.title, vod.meta_id,vod.id AS vodId
+  </sql>
+    <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from media_vod vod
+        LEFT JOIN category_vod_mapping mapping on vod.media_code = mapping.media_code
+    </select>
+    <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from category_vod_mapping
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+    <insert id="insert" keyColumn="id" keyProperty="id"
+            parameterType="com.springboot.c2.entity.CategoryVodMapping" useGeneratedKeys="true">
+    insert into category_vod_mapping (category_id, category_code, media_id, 
+      media_code,sequence,create_time,modify_time)
+    values (#{categoryId,jdbcType=VARCHAR}, #{categoryCode,jdbcType=VARCHAR}, #{mediaId,jdbcType=VARCHAR}, 
+      #{mediaCode,jdbcType=VARCHAR},#{sequence,jdbcType=VARCHAR}, now(),now())
+  </insert>
+    <update id="updateByPrimaryKeySelective" parameterType="com.springboot.c2.entity.CategoryVodMapping">
+        update category_vod_mapping
+        <set>
+            <if test="categoryId != null">
+                category_id = #{categoryId,jdbcType=VARCHAR},
+            </if>
+            <if test="categoryCode != null">
+                category_code = #{categoryCode,jdbcType=VARCHAR},
+            </if>
+            <if test="mediaId != null">
+                media_id = #{mediaId,jdbcType=VARCHAR},
+            </if>
+            <if test="mediaCode != null">
+                media_code = #{mediaCode,jdbcType=VARCHAR},
+            </if>
+            <if test="sequence != null">
+                sequence = #{sequence,jdbcType=VARCHAR},
+            </if>
+            modify_time = now()
+        </set>
+        where id = #{id,jdbcType=INTEGER}
+    </update>
+    <sql id="whereCondition">
+        <where>
+            <if test="q.categoryId != null">
+                and mapping.category_id = #{q.categoryId,jdbcType=VARCHAR}
+            </if>
+            <if test="q.categoryCode != null">
+                and mapping.category_code = #{q.categoryCode,jdbcType=VARCHAR}
+            </if>
+            <if test="q.mediaId != null">
+                and vod.media_id = #{q.mediaId,jdbcType=VARCHAR}
+            </if>
+            <if test="q.mediaCode != null">
+                and vod.media_code = #{q.mediaCode,jdbcType=VARCHAR}
+            </if>
+            <if test="q.metaIdNot != null">
+                and vod.meta_id != #{q.metaIdNot,jdbcType=VARCHAR}
+            </if>
+            <if test="q.title != null and q.title != ''">
+                and vod.title like CONCAT('%',#{q.title,jdbcType=VARCHAR},'%')
+            </if>
+        </where>
+    </sql>
+    <select id="query" parameterType="com.springboot.c2.utils.ModelSetup" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from media_vod vod
+        RIGHT OUTER JOIN category_vod_mapping mapping on vod.media_code = mapping.media_code
+        <include refid="whereCondition"/>
+        ORDER BY mapping.sequence+0 ASC
+    </select>
+
+    <sql id="lnwhereCondition">
+        <where>
+            <if test="q.categoryId != null">
+                and mapping.category_id = #{q.categoryId,jdbcType=VARCHAR}
+            </if>
+            <if test="q.categoryCode != null">
+                and mapping.category_code = #{q.categoryCode,jdbcType=VARCHAR}
+            </if>
+            <if test="q.mediaId != null">
+                and vod.media_id = #{q.mediaId,jdbcType=VARCHAR}
+            </if>
+            <if test="q.mediaCode != null">
+                and vod.media_code like  CONCAT('%',#{q.mediaCode,jdbcType=VARCHAR},'%');
+            </if>
+            <if test="q.metaIdNot != null">
+                and vod.meta_id != #{q.metaIdNot,jdbcType=VARCHAR}
+            </if>
+            <if test="q.title != null and q.title != ''">
+                and vod.title like CONCAT('%',#{q.title,jdbcType=VARCHAR},'%')
+            </if>
+        </where>
+    </sql>
+    <select id="lnquery" parameterType="com.springboot.c2.utils.ModelSetup" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from media_vod vod
+        RIGHT OUTER JOIN category_vod_mapping mapping on vod.media_code = mapping.media_code
+        <include refid="lnwhereCondition"/>
+        ORDER BY mapping.sequence+0 ASC
+    </select>
+
+    <select id="count" parameterType="com.springboot.c2.utils.ModelSetup" resultType="java.lang.Integer">
+        select count(1) from media_vod vod
+        LEFT JOIN category_vod_mapping mapping on vod.media_code = mapping.media_code
+        <include refid="whereCondition"/>
+    </select>
+    <select id="selectAll" parameterType="com.springboot.c2.utils.ModelSetup" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from media_vod vod
+        LEFT JOIN category_vod_mapping mapping on vod.media_code = mapping.media_code
+        <include refid="whereCondition"/>
+    </select>
+    <delete id="deleteByPrimaryKeys" parameterType="java.lang.Integer">
+        delete from category_vod_mapping where id in
+        <foreach item="id" index="index" collection="array" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </delete>
+    <delete id="deleteByCategoryCodeAndVodCodes">
+        delete from category_vod_mapping where
+        category_code = #{categoryCode,jdbcType=VARCHAR} AND
+        media_code IN
+        <foreach item="code" index="index" collection="codes" open="(" separator="," close=")">
+            #{code,jdbcType=VARCHAR}
+        </foreach>
+    </delete>
+    <insert id="insertByCategoryCodeAndVodCodes" keyColumn="id" keyProperty="id" useGeneratedKeys="true">
+        insert into category_vod_mapping (category_id, category_code, media_id, media_code,create_time,modify_time)
+        select a.category_id,a.category_code,b.media_id,b.media_code,now(),now() from category a,media_vod b WHERE
+        a.category_code = #{categoryCode,jdbcType=VARCHAR} AND b.media_code IN
+        <foreach item="code" index="index" collection="codes" open="(" separator="," close=")">
+            #{code,jdbcType=VARCHAR}
+        </foreach>
+    </insert>
+    <delete id="deleteByCategoryTableIds" parameterType="java.lang.Integer">
+        delete from category_vod_mapping where category_code in
+        (select category_code FROM category WHERE id in
+        <foreach item="id" index="index" collection="array" open="(" separator="," close=")">
+            #{id}
+        </foreach>)
+    </delete>
+    <delete id="deleteByMediaId" parameterType="java.lang.String">
+         delete from category_vod_mapping where media_id = #{mediaId,jdbcType=VARCHAR}
+    </delete>
+
+
+    <!--根据媒资ID查询分类map信息-->
+    <select id="getCategoryIdName" resultType="java.util.HashMap" parameterType="java.util.HashMap">
+        select c.category_id as categoryId,c.title as categoryName from category c, category_vod_mapping cv
+        <where>
+            c.category_id=cv.category_id
+            <if test="mediaId != null and mediaId!=''">
+                and cv.media_id = #{mediaId,jdbcType=VARCHAR}
+            </if>
+        </where>
+
+    </select>
+
+    <select id="selectByCategoryCode" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from media_vod vod
+        LEFT JOIN category_vod_mapping mapping on vod.media_code = mapping.media_code
+        where
+        mapping.category_code = #{categoryCode,jdbcType=VARCHAR}
+        ORDER BY sequence+0 ASC
+    </select>
+    <select id="selectByCategoryCodeAndMediaCode" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from media_vod vod
+        LEFT JOIN category_vod_mapping mapping on vod.media_code = mapping.media_code
+        where
+        mapping.category_code = #{categoryCode,jdbcType=VARCHAR}
+        and vod.media_code = #{mediaCode,jdbcType=VARCHAR}
+    </select>
+    <select id="getByPCategoryCodeAndMediaCode" resultMap="BaseResultMap">
+        select b.id, b.category_id, b.category_code, b.media_id, b.media_code, b.sequence, b.create_time, b.modify_time
+        from category a, category_vod_mapping b
+        where a.pcode = #{pCategoryCode,jdbcType=VARCHAR}
+        and a.category_code = b.category_code
+        and b.media_code = #{mediaCode,jdbcType=VARCHAR}
+    </select>
+    <select id="selectByMediaCode" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from media_vod vod
+        LEFT JOIN category_vod_mapping mapping on vod.media_code = mapping.media_code
+        where
+        vod.media_code = #{mediaCode,jdbcType=VARCHAR}
+    </select>
+
+</mapper>

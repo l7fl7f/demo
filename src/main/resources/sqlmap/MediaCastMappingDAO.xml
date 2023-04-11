@@ -1,0 +1,204 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.springboot.c2.dao.MediaCastMappingDAO">
+    <resultMap id="BaseResultMap" type="com.springboot.c2.entity.MediaCastMapping">
+        <id column="id" jdbcType="INTEGER" property="id"/>
+        <result column="role_id" jdbcType="VARCHAR" property="roleId"/>
+        <result column="role_code" jdbcType="VARCHAR" property="roleCode"/>
+        <result column="media_id" jdbcType="VARCHAR" property="mediaId"/>
+        <result column="media_code" jdbcType="VARCHAR" property="mediaCode"/>
+        <result column="img_type" jdbcType="VARCHAR" property="imgType"/>
+        <result column="sequence" jdbcType="VARCHAR" property="sequence"/>
+    </resultMap>
+
+    <resultMap id="MediaCastResultMap" type="com.springboot.c2.entity.MediaCastMapping">
+        <id column="id" jdbcType="INTEGER" property="id"/>
+        <result column="role_id" jdbcType="VARCHAR" property="roleId"/>
+        <result column="role_code" jdbcType="VARCHAR" property="roleCode"/>
+        <result column="media_id" jdbcType="VARCHAR" property="mediaId"/>
+        <result column="media_code" jdbcType="VARCHAR" property="mediaCode"/>
+        <result column="img_type" jdbcType="VARCHAR" property="imgType"/>
+        <result column="sequence" jdbcType="VARCHAR" property="sequence"/>
+        <result column="cast_role" jdbcType="VARCHAR" property="castRole"/>
+        <result column="name" jdbcType="VARCHAR" property="name"/>
+        <result column="person_display_name" jdbcType="VARCHAR" property="personDisplayName"/>
+    </resultMap>
+
+    <sql id="Base_Column_List">
+    id, role_id, role_code, media_id, media_code, img_type, `sequence`
+  </sql>
+
+    <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from media_cast_mapping
+        where id = #{id,jdbcType=INTEGER}
+    </select>
+
+    <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from media_cast_mapping
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+
+    <insert id="insert" keyColumn="id" keyProperty="id"
+            parameterType="com.springboot.c2.entity.MediaCastMapping" useGeneratedKeys="true">
+    insert into media_cast_mapping (role_id, role_code, media_id,
+      media_code, img_type, `sequence`
+      )
+    values (#{roleId,jdbcType=VARCHAR}, #{roleCode,jdbcType=VARCHAR}, #{mediaId,jdbcType=VARCHAR},
+      #{mediaCode,jdbcType=VARCHAR}, #{imgType,jdbcType=VARCHAR}, #{sequence,jdbcType=VARCHAR}
+      )
+  </insert>
+
+    <update id="updateByPrimaryKeySelective" parameterType="com.springboot.c2.entity.MediaCastMapping">
+        update media_cast_mapping
+        <set>
+            <if test="roleId != null">
+                role_id = #{roleId,jdbcType=VARCHAR},
+            </if>
+            <if test="roleCode != null">
+                role_code = #{roleCode,jdbcType=VARCHAR},
+            </if>
+            <if test="mediaId != null">
+                media_id = #{mediaId,jdbcType=VARCHAR},
+            </if>
+            <if test="mediaCode != null">
+                media_code = #{mediaCode,jdbcType=VARCHAR},
+            </if>
+            <if test="imgType != null">
+                img_type = #{imgType,jdbcType=VARCHAR},
+            </if>
+            <if test="sequence != null">
+                `sequence` = #{sequence,jdbcType=VARCHAR},
+            </if>
+        </set>
+        where id = #{id,jdbcType=INTEGER}
+    </update>
+    <update id="updateRoleIdByRoleId">
+        update media_cast_mapping
+        <set>
+            role_id = #{newRoleId,jdbcType=VARCHAR},
+        </set>
+        where role_id = #{oldRoleId,jdbcType=VARCHAR}
+    </update>
+    <update id="updateRoleCodeByRoleCode">
+        update media_cast_mapping
+        <set>
+            role_code = #{newRoleCode,jdbcType=VARCHAR},
+        </set>
+        where role_code = #{oldRoleCode,jdbcType=VARCHAR}
+    </update>
+
+    <sql id="whereCondition">
+        <where>
+            <if test="q.roleId != null">
+                and role_id = #{q.roleId,jdbcType=VARCHAR}
+            </if>
+            <if test="q.roleCode != null">
+                and role_code = #{q.roleCode,jdbcType=VARCHAR}
+            </if>
+            <if test="q.mediaId != null">
+                and media_id = #{q.mediaId,jdbcType=VARCHAR}
+            </if>
+            <if test="q.mediaCode != null">
+                and media_code = #{q.mediaCode,jdbcType=VARCHAR}
+            </if>
+            <if test="q.imgType != null">
+                and img_type = #{q.imgType,jdbcType=VARCHAR}
+            </if>
+            <if test="q.sequence != null">
+                and `sequence` = #{q.sequence,jdbcType=VARCHAR}
+            </if>
+        </where>
+    </sql>
+
+    <sql id="whereMediaCastCondition">
+        <if test="q.castId != null">
+            and mcm.cast_id = #{q.castId,jdbcType=VARCHAR}
+        </if>
+        <if test="q.castCode != null">
+            and mcm.cast_code = #{q.castCode,jdbcType=VARCHAR}
+        </if>
+        <if test="q.mediaId != null">
+            and mcm.media_id = #{q.mediaId,jdbcType=VARCHAR}
+        </if>
+        <if test="q.mediaCode != null">
+            and mcm.media_code = #{q.mediaCode,jdbcType=VARCHAR}
+        </if>
+        <if test="q.imgType != null">
+            and mcm.img_type = #{q.imgType,jdbcType=VARCHAR}
+        </if>
+        <if test="q.sequence != null">
+            and mcm.`sequence` = #{q.sequence,jdbcType=VARCHAR}
+        </if>
+    </sql>
+
+    <select id="query" parameterType="com.springboot.c2.utils.ModelSetup" resultMap="MediaCastResultMap">
+        select c.`name` as `name`, c.person_display_name as person_display_name, cm.cast_role as cast_role,
+        mcm.id as id, mcm.role_id as role_id, mcm.role_code as role_code, mcm.media_id as media_id,
+        mcm.media_code as media_code, mcm.img_type as img_type, mcm.`sequence` as `sequence`
+        from `cast` as c, cast_mapping as cm, media_cast_mapping as mcm
+        where c.id = cm.cast_id and cm.role_id = mcm.role_id
+        <include refid="whereMediaCastCondition"/>
+        order by mcm.id
+    </select>
+
+    <select id="count" parameterType="com.springboot.c2.utils.ModelSetup" resultType="java.lang.Integer">
+        select count(1) from media_cast_mapping
+        <include refid="whereCondition"/>
+    </select>
+
+    <select id="selectAll" resultMap="BaseResultMap" parameterType="com.springboot.c2.utils.ModelSetup">
+        select
+        <include refid="Base_Column_List"/>
+        from media_cast_mapping
+        <include refid="whereCondition"/>
+    </select>
+
+    <delete id="deleteByPrimaryKeys" parameterType="java.lang.Integer">
+        delete from media_cast_mapping where id in
+        <foreach item="id" index="index" collection="array" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </delete>
+
+    <delete id="deleteByRoleIds">
+        delete from media_cast_mapping where role_id in
+        <foreach item="roleId" index="index" collection="roleIdArray" open="(" separator="," close=")">
+            #{roleId}
+        </foreach>
+        and media_id = #{mediaId,jdbcType=VARCHAR}
+    </delete>
+
+    <select id="findByRoleIdMediaId" parameterType="java.util.Map" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from media_cast_mapping
+        where role_id = #{roleId,jdbcType=VARCHAR}
+        and media_id = #{mediaId,jdbcType=VARCHAR}
+    </select>
+
+    <delete id="deleteByMediaId" parameterType="java.lang.String">
+    delete from media_cast_mapping where media_id = #{mediaId,jdbcType=VARCHAR}
+  </delete>
+
+
+    <!--根据媒资ID查询图片map信息-->
+    <select id="getCastListMap" resultType="java.util.HashMap" parameterType="java.lang.String">
+        select
+        cm.cast_role,concat('[',GROUP_CONCAT('{','"castId":','"',cm.cast_id,'"',',','"castCode":','"',cm.cast_code,'"',',','"roleId":','"',cm.role_id,'"',',','"roleCode":','"',cm.role_code,'"',',','"name":','"',c.name,'"','}'),']')
+        as casts from `cast` c, cast_mapping cm, media_cast_mapping mcm
+           where  c.id=cm.cast_id and cm.role_id=mcm.role_id
+            and mcm.media_id = #{mediaId,jdbcType=VARCHAR}
+        group by cm.cast_role
+    </select>
+    <select id="selectIdsByCastMappingTableIds" resultType="java.lang.Integer" parameterType="java.lang.Integer">
+        select id from media_cast_mapping where role_id in (
+        select role_id from cast_mapping where id in
+        <foreach item="id" index="index" collection="array" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+        )
+    </select>
+
+</mapper>

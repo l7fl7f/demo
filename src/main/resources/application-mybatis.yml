@@ -1,0 +1,10 @@
+mybatis:
+  mapper-locations: classpath*:sqlmap/**/*.xml
+#  config-location: classpath:/mybatis-config.xml
+#  typeAliasesPackage: com.yfwl
+
+pagehelper:
+  helperDialect: mysql
+  reasonable: false #true表示如果超过页数则返回最后一页的数据
+  supportMethodsArguments: true
+#  params: count1=countSql1

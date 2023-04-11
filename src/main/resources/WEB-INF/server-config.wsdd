@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<deployment xmlns="http://xml.apache.org/axis/wsdd/"
+	xmlns:java="http://xml.apache.org/axis/wsdd/providers/java">
+	<globalConfiguration>
+		<parameter name="adminPassword" value="admin" />
+		<parameter name="attachments.implementation"
+			value="org.apache.axis.attachments.AttachmentsImpl" />
+		<parameter name="sendXsiTypes" value="true" />
+		<parameter name="sendMultiRefs" value="true" />
+		<parameter name="sendXMLDeclaration" value="true" />
+		<parameter name="axis.sendMinimizedElements" value="true" />
+		<requestFlow>
+			<handler type="java:org.apache.axis.handlers.JWSHandler">
+				<parameter name="scope" value="session" />
+			</handler>
+			<handler type="java:org.apache.axis.handlers.JWSHandler">
+				<parameter name="scope" value="request" />
+				<parameter name="extension" value=".jwr" />
+			</handler>
+		</requestFlow>
+	</globalConfiguration>
+	<handler name="LocalResponder"
+		type="java:org.apache.axis.transport.local.LocalResponder" />
+	<handler name="URLMapper" type="java:org.apache.axis.handlers.http.URLMapper" />
+	<handler name="Authenticate"
+		type="java:org.apache.axis.handlers.SimpleAuthenticationHandler" />
+
+
+	<service name="UserInfoQuery" provider="java:RPC" style="wrapped" use="literal">
+		<parameter name="wsdlTargetNamespace" value="http://ui.server.userinfoquery.vas.soap.interfaces.sysmp.staryea.com"/>
+		<parameter name="wsdlServiceElement" value="UserInfoQueryService"/>
+		<parameter name="schemaQualified" value="http://ui.server.userinfoquery.vas.soap.interfaces.sysmp.staryea.com,http://req.ui.server.userinfoquery.vas.soap.interfaces.sysmp.staryea.com,http://rsp.ui.server.userinfoquery.vas.soap.interfaces.sysmp.staryea.com"/>
+		<parameter name="wsdlServicePort" value="UserInfoQuery"/>
+		<parameter name="className" value="com.iptv.springboot.soap.services.userinfoquery.UserInfoQuerySoapBindingImpl"/>
+		<parameter name="wsdlPortType" value="UserInfoQuery"/>
+		<parameter name="typeMappingVersion" value="1.2"/>
+		<operation name="getUserInfo" qname="operNS:getUserInfo" xmlns:operNS="http://ui.server.userinfoquery.vas.soap.interfaces.sysmp.staryea.com" returnQName="retNS:getUserInfoReturn" xmlns:retNS="http://ui.server.userinfoquery.vas.soap.interfaces.sysmp.staryea.com" returnType="rtns:GetUserInfoRsp" xmlns:rtns="http://rsp.ui.server.userinfoquery.vas.soap.interfaces.sysmp.staryea.com" soapAction="" >
+			<parameter qname="pns:getUserInfoReq" xmlns:pns="http://ui.server.userinfoquery.vas.soap.interfaces.sysmp.staryea.com" type="tns:GetUserInfoReq" xmlns:tns="http://req.ui.server.userinfoquery.vas.soap.interfaces.sysmp.staryea.com"/>
+		</operation>
+		<parameter name="allowedMethods" value="getUserInfo"/>
+
+		<typeMapping
+				xmlns:ns="http://rsp.ui.server.userinfoquery.vas.soap.interfaces.sysmp.staryea.com"
+				qname="ns:GetUserInfoRsp"
+				type="java:com.iptv.springboot.soap.services.userinfoquery.GetUserInfoRsp"
+				serializer="org.apache.axis.encoding.ser.BeanSerializerFactory"
+				deserializer="org.apache.axis.encoding.ser.BeanDeserializerFactory"
+				encodingStyle=""
+		/>
+		<typeMapping
+				xmlns:ns="http://req.ui.server.userinfoquery.vas.soap.interfaces.sysmp.staryea.com"
+				qname="ns:GetUserInfoReq"
+				type="java:com.iptv.springboot.soap.services.userinfoquery.GetUserInfoReq"
+				serializer="org.apache.axis.encoding.ser.BeanSerializerFactory"
+				deserializer="org.apache.axis.encoding.ser.BeanDeserializerFactory"
+				encodingStyle=""
+		/>
+	</service>
+
+
+	<transport name="http">
+		<requestFlow>
+			<handler type="URLMapper" />
+			<handler type="java:org.apache.axis.handlers.http.HTTPAuthHandler" />
+		</requestFlow>
+	</transport>
+	<transport name="local">
+		<responseFlow>
+			<handler type="LocalResponder" />
+		</responseFlow>
+	</transport>
+
+</deployment>

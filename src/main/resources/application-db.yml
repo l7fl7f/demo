@@ -1,0 +1,128 @@
+spring:
+  #druid单数据源配置
+  datasource:
+    #name: smp_local
+    #url: jdbc:mysql://120.55.160.231:3306/smp_local
+    #username: root
+    #password: yoongoo #VwxiuWhaKj99Vz9n3owbq6nxzIFfdj+Bg9zBLf/HjDxHmC1QDrHPr4gl6VUt/nkcoCKE/M9tNbvkcHbJy8ODaA==
+    #        name: smp_iptv
+    #        url: jdbc:mysql://39.108.78.224:23306/smp_iptv
+    #        username: smpiptv
+    #        password: Sc1sMp0iPtV2Dx
+
+
+    # 使用druid数据源
+    type: com.alibaba.druid.pool.DruidDataSource
+    driver-class-name: com.mysql.jdbc.Driver
+    #druid单数据源
+    #        druid:
+    #            initial-size: 5
+    #            max-active: 20
+    #            min-idle: 5
+    #            max-wait: 10000
+    #            not-full-timeout-retry-count: 0
+    #            validation-query: SELECT 1
+    #            validation-query-timeout: -1
+    #            test-while-idle: true
+    #            test-on-borrow: false
+    #            test-on-return: false
+    #            time-between-eviction-runs-millis: 60000
+    #            time-between-connect-error-millis: 500
+    #            min-evictable-idle-time-millis: 1800000
+    #            max-evictable-idle-time-millis: 25200000
+    #            phy-timeout-millis: -1
+    #            pool-prepared-statements: false
+    #            share-prepared-statements: false
+    #            max-pool-prepared-statement-per-connection-size: 5
+    #            use-global-data-source-stat: false
+    #            filter:
+    #                slf4j:  #slf4j，log4j无法输出sql日志
+    #                    ## 是否开启 StatFilter，默认 false（https://github.com/alibaba/druid/wiki/%E9%85%8D%E7%BD%AE_LogFilter）
+    #                    enabled: true
+    #                    data-source-log-enabled: false
+    #                    connection-log-enabled: false
+    #                    ## statement log 的总开关，前置条件：druid.sql.Statement 的日志级别为 debug
+    #                    statement-log-enabled: true
+    #                    statement-executable-sql-log-enable: true
+    #                    ### {conn-410001, pstmt-420002} executed. 2.073044 millis. $sql
+    #                    statement-execute-after-log-enabled: true
+    #                    result-set-log-enabled: false
+    #                stat:
+    #                    enabled: true
+    #                    log-slow-sql: true
+    #                    ## 慢查询的定义
+    #                    slow-sql-millis: 500
+    #
+    #        #druid多数据源 springboot 2.0不支持继承，所有的druid连接信息都要单独配置
+    druid:
+      filter:
+        slf4j:  #slf4j，log4j无法输出sql日志
+          ## 是否开启 StatFilter，默认 false（https://github.com/alibaba/druid/wiki/%E9%85%8D%E7%BD%AE_LogFilter）
+          enabled: true
+          data-source-log-enabled: false
+          connection-log-enabled: false
+          ## statement log 的总开关，前置条件：druid.sql.Statement 的日志级别为 debug
+          statement-log-enabled: true
+          statement-executable-sql-log-enable: true
+          ### {conn-410001, pstmt-420002} executed. 2.073044 millis. $sql
+          statement-execute-after-log-enabled: true
+          result-set-log-enabled: false
+        stat:
+          enabled: true
+          log-slow-sql: true
+          ## 慢查询的定义
+          slow-sql-millis: 500
+      #datasource default
+      primary:
+        #url: jdbc:mysql://39.108.78.224:23306/smp_local
+        name: smp_iptv_2_mongo
+        driver-class-name: com.mysql.jdbc.Driver
+        #                url: jdbc:mysql://118.123.189.76:23306/smp_iptv_test
+        url: jdbc:mysql://118.123.189.248:23306/smp_iptv_2_mongo
+        username: iptvtest
+        password: Sc1sMp0iPtV2DxTest
+        initial-size: 5
+        max-active: 20
+        min-idle: 5
+        max-wait: 10000
+        not-full-timeout-retry-count: 0
+        validation-query: SELECT 1
+        validation-query-timeout: -1
+        test-while-idle: true
+        test-on-borrow: false
+        test-on-return: false
+        time-between-eviction-runs-millis: 60000
+        time-between-connect-error-millis: 500
+        min-evictable-idle-time-millis: 1800000
+        max-evictable-idle-time-millis: 25200000
+        phy-timeout-millis: -1
+        pool-prepared-statements: false
+        share-prepared-statements: false
+        max-pool-prepared-statement-per-connection-size: 5
+        use-global-data-source-stat: false
+      #datasource mps
+#      epgscount:
+#        name: epgs_count
+#        driver-class-name: com.mysql.jdbc.Driver
+#        url: jdbc:mysql://118.123.189.76:23306/smp_iptv_test
+#        username: iptvtest
+#        password: Sc1sMp0iPtV2DxTest
+#        initial-size: 5
+#        max-active: 10
+#        min-idle: 5
+#        max-wait: 10000
+#        not-full-timeout-retry-count: 0
+#        validation-query: SELECT 1
+#        validation-query-timeout: -1
+#        test-while-idle: true
+#        test-on-borrow: false
+#        test-on-return: false
+#        time-between-eviction-runs-millis: 60000
+#        time-between-connect-error-millis: 500
+#        min-evictable-idle-time-millis: 1800000
+#        max-evictable-idle-time-millis: 25200000
+#        phy-timeout-millis: -1
+#        pool-prepared-statements: false
+#        share-prepared-statements: false
+#        max-pool-prepared-statement-per-connection-size: 5
+#        use-global-data-source-stat: false

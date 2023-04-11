@@ -1,0 +1,210 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.springboot.c2.dao.ImageMediaMappingDAO">
+    <resultMap id="BaseResultMap" type="com.springboot.c2.entity.ImageMediaMapping">
+        <id column="id" jdbcType="INTEGER" property="id"/>
+        <result column="img_id" jdbcType="VARCHAR" property="imgId"/>
+        <result column="img_code" jdbcType="VARCHAR" property="imgCode"/>
+        <result column="media_id" jdbcType="VARCHAR" property="mediaId"/>
+        <result column="media_code" jdbcType="VARCHAR" property="mediaCode"/>
+        <result column="img_type" jdbcType="VARCHAR" property="imgType"/>
+        <result column="sequence" jdbcType="VARCHAR" property="sequence"/>
+    </resultMap>
+    <resultMap id="MediaImgResultMap" type="com.springboot.c2.entity.MediaImg">
+        <id column="id" jdbcType="VARCHAR" property="id"/>
+        <result column="code" jdbcType="VARCHAR" property="code"/>
+        <result column="url" jdbcType="VARCHAR" property="url"/>
+        <result column="type" jdbcType="VARCHAR" property="type"/>
+        <result column="create_time" jdbcType="TIMESTAMP" property="createTime"/>
+        <result column="modify_time" jdbcType="TIMESTAMP" property="modifyTime"/>
+        <result column="description" jdbcType="LONGVARCHAR" property="description"/>
+        <result column="image_media_mapping_id" jdbcType="INTEGER" property="imageMediaMappingId"/>
+        <result column="media_id" jdbcType="VARCHAR" property="mediaId"/>
+        <result column="media_code" jdbcType="VARCHAR" property="mediaCode"/>
+        <result column="img_type" jdbcType="VARCHAR" property="imgType"/>
+        <result column="sequence" jdbcType="VARCHAR" property="sequence"/>
+    </resultMap>
+
+    <sql id="Base_Column_List">
+    id, img_id, img_code, media_id, media_code, img_type, `sequence`
+  </sql>
+
+    <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from image_media_mapping
+        where id = #{id,jdbcType=INTEGER}
+    </select>
+
+    <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from image_media_mapping
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+
+    <insert id="insert" keyColumn="id" keyProperty="id"
+            parameterType="com.springboot.c2.entity.ImageMediaMapping" useGeneratedKeys="true">
+    insert into image_media_mapping (img_id, img_code, media_id, 
+      media_code, img_type, `sequence`
+      )
+    values (#{imgId,jdbcType=VARCHAR}, #{imgCode,jdbcType=VARCHAR}, #{mediaId,jdbcType=VARCHAR}, 
+      #{mediaCode,jdbcType=VARCHAR}, #{imgType,jdbcType=VARCHAR}, #{sequence,jdbcType=VARCHAR}
+      )
+  </insert>
+
+    <update id="updateByPrimaryKeySelective" parameterType="com.springboot.c2.entity.ImageMediaMapping">
+        update image_media_mapping
+        <set>
+            <if test="imgId != null">
+                img_id = #{imgId,jdbcType=VARCHAR},
+            </if>
+            <if test="imgCode != null">
+                img_code = #{imgCode,jdbcType=VARCHAR},
+            </if>
+            <if test="mediaId != null">
+                media_id = #{mediaId,jdbcType=VARCHAR},
+            </if>
+            <if test="mediaCode != null">
+                media_code = #{mediaCode,jdbcType=VARCHAR},
+            </if>
+            <if test="imgType != null">
+                img_type = #{imgType,jdbcType=VARCHAR},
+            </if>
+            <if test="sequence != null">
+                `sequence` = #{sequence,jdbcType=VARCHAR},
+            </if>
+        </set>
+        where id = #{id,jdbcType=INTEGER}
+    </update>
+
+    <sql id="whereCondition">
+        <where>
+            <if test="q.imgId != null">
+                and img_id = #{q.imgId,jdbcType=VARCHAR}
+            </if>
+            <if test="q.imgCode != null">
+                and img_code = #{q.imgCode,jdbcType=VARCHAR}
+            </if>
+            <if test="q.mediaId != null">
+                and media_id = #{q.mediaId,jdbcType=VARCHAR}
+            </if>
+            <if test="q.mediaCode != null">
+                and media_code = #{q.mediaCode,jdbcType=VARCHAR}
+            </if>
+            <if test="q.imgType != null">
+                and img_type = #{q.imgType,jdbcType=VARCHAR}
+            </if>
+            <if test="q.sequence != null">
+                and `sequence` = #{q.sequence,jdbcType=VARCHAR}
+            </if>
+        </where>
+    </sql>
+
+    <sql id="whereMediaImgCondition">
+        <if test="q.code != null">
+            and i.code = #{q.code,jdbcType=VARCHAR}
+        </if>
+        <if test="q.url != null">
+            and i.url = #{q.url,jdbcType=VARCHAR}
+        </if>
+        <if test="q.type != null">
+            and i.`type` = #{q.type,jdbcType=VARCHAR}
+        </if>
+        <if test="q.createTime != null">
+            and i.create_time = #{q.createTime,jdbcType=TIMESTAMP}
+        </if>
+        <if test="q.modifyTime != null">
+            and i.modify_time = #{q.modifyTime,jdbcType=TIMESTAMP}
+        </if>
+        <if test="q.description != null">
+            and i.description = #{q.description,jdbcType=LONGVARCHAR}
+        </if>
+        <if test="q.imageMediaMappingId != null">
+            and imp.id = #{q.imageMediaMappingId,jdbcType=VARCHAR}
+        </if>
+        <if test="q.mediaId != null">
+            and imp.media_id = #{q.mediaId,jdbcType=VARCHAR}
+        </if>
+        <if test="q.mediaCode != null">
+            and imp.media_code = #{q.mediaCode,jdbcType=VARCHAR}
+        </if>
+        <if test="q.imgType != null">
+            and imp.img_type = #{q.imgType,jdbcType=VARCHAR}
+        </if>
+        <if test="q.sequence != null">
+            and imp.`sequence` = #{q.sequence,jdbcType=VARCHAR}
+        </if>
+    </sql>
+
+    <!--<select id="query" parameterType="com.iptv.kms.core.dao.support.ModelSetup" resultMap="BaseResultMap">
+       select <include refid="Base_Column_List" /> from image_media_mapping
+      <include refid="whereCondition" />
+    </select>-->
+
+    <select id="query" parameterType="com.springboot.c2.utils.ModelSetup" resultMap="MediaImgResultMap">
+        select i.id as id, i.code as code, i.url as url, i.type as type, i.create_time as create_time, i.modify_time as
+        modify_time,
+        i.description as description, imp.id as image_media_mapping_id, imp.media_id as media_id, imp.media_code as
+        media_code,
+        imp.img_type as img_type, imp.sequence as sequence from images as i, image_media_mapping as imp
+        where i.id = imp.img_id
+        <include refid="whereMediaImgCondition"/>
+    </select>
+
+    <select id="count" parameterType="com.springboot.c2.utils.ModelSetup" resultType="java.lang.Integer">
+        select count(1) from image_media_mapping
+        <include refid="whereCondition"/>
+    </select>
+
+    <select id="selectAll" resultMap="BaseResultMap" parameterType="com.springboot.c2.utils.ModelSetup">
+        select
+        <include refid="Base_Column_List"/>
+        from image_media_mapping
+        <include refid="whereCondition"/>
+    </select>
+
+    <delete id="deleteByPrimaryKeys" parameterType="java.lang.Integer">
+        delete from image_media_mapping where id in
+        <foreach item="id" index="index" collection="array" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </delete>
+
+    <delete id="deleteByImagesId" parameterType="java.lang.String">
+    delete from image_media_mapping where img_id = #{imgId,jdbcType=VARCHAR}
+  </delete>
+
+    <!--<select id="findByMediaId" parameterType="java.lang.String" resultMap="BaseResultMap">
+      select
+      <include refid="Base_Column_List" />
+      from image_media_mapping
+      where media_id = #{mediaId,jdbcType=VARCHAR}
+    </select>-->
+
+    <select id="findByMediaId" parameterType="java.lang.String" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from image_media_mapping
+        where media_id = #{mediaId,jdbcType=VARCHAR}
+    </select>
+
+
+    <!--根据媒资ID查询图片map信息-->
+    <select id="getImgListMap" resultType="java.util.HashMap" parameterType="java.util.HashMap">
+        select
+        im.img_type,concat('[',GROUP_CONCAT('{','"url":','"',i.url,'"',',','"sequence":','"',im.sequence,'"',',','"upTime":','"',i.create_time,'"','}'),']')
+        as images from images i, image_media_mapping im
+        <where>
+            i.id=im.img_id
+            <if test="mediaId != null and mediaId!=''">
+                and im.media_id = #{mediaId,jdbcType=VARCHAR}
+            </if>
+        </where>
+        group by im.img_type
+    </select>
+    <select id="selectSequence" resultType="java.lang.String">
+        select sequence
+        from image_media_mapping
+        where  img_code = #{imgCode,jdbcType=VARCHAR}
+    </select>
+
+</mapper>

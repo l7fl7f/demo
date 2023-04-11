@@ -1,0 +1,296 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.springboot.c2.dao.MovieDAO">
+    <resultMap id="BaseResultMap" type="com.springboot.c2.entity.Movie">
+        <result column="id" jdbcType="VARCHAR" property="id"/>
+        <result column="code" jdbcType="VARCHAR" property="code"/>
+        <result column="audio_format" jdbcType="VARCHAR" property="audioFormat"/>
+        <result column="audio_type" jdbcType="VARCHAR" property="audioType"/>
+        <result column="bitrate_type" jdbcType="VARCHAR" property="bitrateType"/>
+        <result column="closed_captioning" jdbcType="VARCHAR" property="closedCaptioning"/>
+        <result column="dest_drm_type" jdbcType="VARCHAR" property="destDrmType"/>
+        <result column="domain_type" jdbcType="VARCHAR" property="domainType"/>
+        <result column="duration" jdbcType="VARCHAR" property="duration"/>
+        <result column="element_type" jdbcType="VARCHAR" property="elementType"/>
+        <result column="error_msg" jdbcType="VARCHAR" property="errorMsg"/>
+        <result column="file_size" jdbcType="VARCHAR" property="fileSize"/>
+        <result column="file_url" jdbcType="VARCHAR" property="fileUrl"/>
+        <result column="name" jdbcType="VARCHAR" property="name"/>
+        <result column="next_time" jdbcType="VARCHAR" property="nextTime"/>
+        <result column="ocs_url" jdbcType="VARCHAR" property="ocsUrl"/>
+        <result column="provider" jdbcType="VARCHAR" property="provider"/>
+        <result column="resolution" jdbcType="VARCHAR" property="resolution"/>
+        <result column="screen_format" jdbcType="VARCHAR" property="screenFormat"/>
+        <result column="service_type" jdbcType="VARCHAR" property="serviceType"/>
+        <result column="source_drm_type" jdbcType="VARCHAR" property="sourceDrmType"/>
+        <result column="state" jdbcType="VARCHAR" property="state"/>
+        <result column="system_layer" jdbcType="VARCHAR" property="systemLayer"/>
+        <result column="type" jdbcType="VARCHAR" property="type"/>
+        <result column="video_profile" jdbcType="VARCHAR" property="videoProfile"/>
+        <result column="video_type" jdbcType="VARCHAR" property="videoType"/>
+        <result column="biz_domain" jdbcType="VARCHAR" property="bizDomain"/>
+        <result column="message_id" jdbcType="VARCHAR" property="messageId"/>
+        <result column="store_path" jdbcType="VARCHAR" property="storePath"/>
+        <result column="create_time" jdbcType="TIMESTAMP" property="createTime"/>
+        <result column="update_time" jdbcType="TIMESTAMP" property="updateTime"/>
+    </resultMap>
+
+    <sql id="Base_Column_List">
+        id,code,audio_format,audio_type,bitrate_type,closed_captioning,dest_drm_type,domain_type,duration,element_type,
+        error_msg,file_size,file_url,`name`,next_time,ocs_url,provider,resolution,screen_format,service_type,source_drm_type,
+        state,system_layer,`type`,video_profile,video_type,biz_domain,message_id,store_path,create_time,update_time
+    </sql>
+
+    <sql id="Base_Column_List_1">
+        a.id,a.code,a.audio_format,a.audio_type,a.bitrate_type,a.closed_captioning,a.dest_drm_type,a.domain_type,a.duration,a.element_type,a.
+        error_msg,a.file_size,a.file_url,a.`name`,a.next_time,a.ocs_url,a.provider,a.resolution,a.screen_format,a.service_type,a.source_drm_type,a.
+        state,a.system_layer,a.`type`,a.video_profile,a.video_type,a.biz_domain,a.message_id,a.store_path,a.create_time,a.update_time
+    </sql>
+
+    <insert id="insert" parameterType="com.springboot.c2.entity.Movie">
+        insert into movie (id,code,audio_format,audio_type,bitrate_type,closed_captioning,dest_drm_type,domain_type,duration,element_type,
+        error_msg,file_size,file_url,`name`,next_time,ocs_url,provider,resolution,screen_format,service_type,source_drm_type,
+        state,system_layer,`type`,video_profile,video_type,biz_domain,message_id,store_path,create_time,update_time)
+        values (#{id,jdbcType=VARCHAR}, #{code,jdbcType=VARCHAR}, #{audioFormat,jdbcType=VARCHAR}, #{audioType,jdbcType=VARCHAR},
+        #{bitrateType,jdbcType=VARCHAR}, #{closedCaptioning,jdbcType=VARCHAR}, #{destDrmType,jdbcType=VARCHAR}, #{domainType,jdbcType=VARCHAR},
+        #{duration,jdbcType=VARCHAR}, #{elementType,jdbcType=VARCHAR}, #{errorMsg,jdbcType=VARCHAR}, #{fileSize,jdbcType=VARCHAR},
+        #{fileUrl,jdbcType=VARCHAR}, #{name,jdbcType=VARCHAR},#{nextTime,jdbcType=VARCHAR}, #{ocsUrl,jdbcType=VARCHAR},
+        #{provider,jdbcType=VARCHAR}, #{resolution,jdbcType=VARCHAR}, #{screenFormat,jdbcType=VARCHAR}, #{serviceType,jdbcType=VARCHAR},
+        #{sourceDrmType,jdbcType=VARCHAR}, #{state,jdbcType=VARCHAR}, #{systemLayer,jdbcType=VARCHAR}, #{type,jdbcType=VARCHAR},
+        #{videoProfile,jdbcType=VARCHAR}, #{videoType,jdbcType=VARCHAR}, #{bizDomain,jdbcType=VARCHAR}, #{messageId,jdbcType=VARCHAR},
+        #{storePath,jdbcType=VARCHAR}, #{createTime,jdbcType=TIMESTAMP}, #{updateTime,jdbcType=TIMESTAMP})
+    </insert>
+
+    <delete id="delete" parameterType="java.lang.String">
+        delete from movie where code = #{code,jdbcType=VARCHAR}
+    </delete>
+
+    <select id="selectByCode" parameterType="java.lang.String" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from movie
+        where code = #{code,jdbcType=VARCHAR}
+    </select>
+
+    <select id="count" parameterType="com.springboot.c2.utils.ModelSetup" resultType="java.lang.Integer">
+        select count(1) from movie
+        <include refid="whereCondition"/>
+    </select>
+
+    <select id="query" parameterType="com.springboot.c2.utils.ModelSetup" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from movie
+        <include refid="whereCondition"/>
+    </select>
+
+    <select id="selectAll" resultMap="BaseResultMap" parameterType="com.springboot.c2.utils.ModelSetup">
+        select
+        <include refid="Base_Column_List"/>
+        from movie
+        <include refid="whereCondition"/>
+    </select>
+
+    <select id="selectByProgram" resultType="com.springboot.c2.entity.Movie" parameterType="com.springboot.c2.utils.ModelSetup">
+        select a.* from movie a, program_movie_mapping b where a.code = b.movie_code and b.program_code = #{q.programCode,jdbcType=VARCHAR}
+    </select>
+
+    <select id="selectBySeries" resultType="com.springboot.c2.entity.Movie" parameterType="com.springboot.c2.utils.ModelSetup">
+        select a.* from movie a, program_movie_mapping b, series_program_mapping c where a.code = b.movie_code and b.program_code = c.episode_code and c.series_code = #{q.seriesCode,jdbcType=VARCHAR}
+    </select>
+
+    <update id="updateByCode" parameterType="com.springboot.c2.entity.Movie">
+        update movie
+        <set>
+            <if test="id != null">
+                id = #{id,jdbcType=VARCHAR},
+            </if>
+            <if test="audioFormat != null">
+                audio_format = #{audioFormat,jdbcType=VARCHAR},
+            </if>
+            <if test="audioType != null">
+                audio_type = #{audioType,jdbcType=VARCHAR},
+            </if>
+            <if test="bitrateType != null">
+                bitrate_type = #{bitrateType,jdbcType=VARCHAR},
+            </if>
+            <if test="closedCaptioning != null">
+                closed_captioning = #{closedCaptioning,jdbcType=VARCHAR},
+            </if>
+            <if test="destDrmType != null">
+                dest_drm_type = #{destDrmType,jdbcType=VARCHAR},
+            </if>
+            <if test="domainType != null">
+                domain_type = #{domainType,jdbcType=VARCHAR},
+            </if>
+            <if test="duration != null">
+                duration = #{duration,jdbcType=VARCHAR},
+            </if>
+            <if test="elementType != null">
+                element_type = #{elementType,jdbcType=VARCHAR},
+            </if>
+            <if test="errorMsg != null">
+                error_msg = #{errorMsg,jdbcType=VARCHAR},
+            </if>
+            <if test="fileSize != null">
+                file_size = #{fileSize,jdbcType=VARCHAR},
+            </if>
+            <if test="fileUrl != null">
+                file_url = #{fileUrl,jdbcType=VARCHAR},
+            </if>
+            <if test="name != null">
+                `name` = #{name,jdbcType=VARCHAR},
+            </if>
+            <if test="nextTime != null">
+                next_time = #{nextTime,jdbcType=VARCHAR},
+            </if>
+            <if test="ocsUrl != null">
+                ocs_url = #{ocsUrl,jdbcType=VARCHAR},
+            </if>
+            <if test="provider != null">
+                provider = #{provider,jdbcType=VARCHAR},
+            </if>
+            <if test="resolution != null">
+                resolution = #{resolution,jdbcType=VARCHAR},
+            </if>
+            <if test="screenFormat != null">
+                screen_format = #{screenFormat,jdbcType=VARCHAR},
+            </if>
+            <if test="serviceType != null">
+                service_type = #{serviceType,jdbcType=VARCHAR},
+            </if>
+            <if test="sourceDrmType != null">
+                source_drm_type = #{sourceDrmType,jdbcType=VARCHAR},
+            </if>
+            <if test="state != null">
+                state = #{state,jdbcType=VARCHAR},
+            </if>
+            <if test="systemLayer != null">
+                system_layer = #{systemLayer,jdbcType=VARCHAR},
+            </if>
+            <if test="type != null">
+                `type` = #{type,jdbcType=VARCHAR},
+            </if>
+            <if test="videoProfile != null">
+                video_profile = #{videoProfile,jdbcType=VARCHAR},
+            </if>
+            <if test="videoType != null">
+                video_type = #{videoType,jdbcType=VARCHAR},
+            </if>
+            <if test="bizDomain != null">
+                biz_domain = #{bizDomain,jdbcType=VARCHAR},
+            </if>
+            <if test="messageId != null">
+                message_id = #{messageId,jdbcType=VARCHAR},
+            </if>
+            <if test="storePath != null">
+                store_path = #{storePath,jdbcType=VARCHAR},
+            </if>
+            <if test="createTime != null">
+                create_time = #{createTime,jdbcType=TIMESTAMP},
+            </if>
+
+            update_time = now()
+        </set>
+        where code = #{code,jdbcType=VARCHAR}
+    </update>
+
+    <sql id="whereCondition">
+        <where>
+            <if test="q.id != null">
+                and id = #{q.id,jdbcType=VARCHAR}
+            </if>
+            <if test="q.code != null">
+                and code = #{q.code,jdbcType=VARCHAR}
+            </if>
+            <if test="q.audioFormat != null">
+                and audio_format = #{q.audioFormat,jdbcType=VARCHAR}
+            </if>
+            <if test="q.audioType != null">
+                and audio_type = #{q.audioType,jdbcType=VARCHAR}
+            </if>
+            <if test="q.bitrateType != null">
+                and bitrate_type = #{q.bitrateType,jdbcType=VARCHAR}
+            </if>
+            <if test="q.closedCaptioning != null">
+                and closed_captioning = #{q.closedCaptioning,jdbcType=VARCHAR}
+            </if>
+            <if test="q.destDrmType != null">
+                and dest_drm_type = #{q.destDrmType,jdbcType=VARCHAR}
+            </if>
+            <if test="q.domainType != null">
+                and domain_type = #{q.domainType,jdbcType=VARCHAR}
+            </if>
+            <if test="q.duration != null">
+                and duration = #{q.duration,jdbcType=VARCHAR}
+            </if>
+            <if test="q.elementType != null">
+                and element_type = #{q.elementType,jdbcType=VARCHAR}
+            </if>
+            <if test="q.errorMsg != null">
+                and error_msg = #{q.errorMsg,jdbcType=VARCHAR}
+            </if>
+            <if test="q.fileSize != null">
+                and file_size = #{q.fileSize,jdbcType=VARCHAR}
+            </if>
+            <if test="q.fileUrl != null">
+                and file_url = #{q.fileUrl,jdbcType=VARCHAR}
+            </if>
+            <if test="q.name != null">
+                and `name` = #{q.name,jdbcType=VARCHAR}
+            </if>
+            <if test="q.nextTime != null">
+                and next_time = #{q.nextTime,jdbcType=VARCHAR}
+            </if>
+            <if test="q.ocsUrl != null">
+                and ocs_url = #{q.ocsUrl,jdbcType=VARCHAR}
+            </if>
+            <if test="q.provider != null">
+                and provider = #{q.provider,jdbcType=VARCHAR}
+            </if>
+            <if test="q.resolution != null">
+                and resolution = #{q.resolution,jdbcType=VARCHAR}
+            </if>
+            <if test="q.screenFormat != null">
+                and screen_format = #{q.screenFormat,jdbcType=VARCHAR}
+            </if>
+            <if test="q.serviceType != null">
+                and service_type = #{q.serviceType,jdbcType=VARCHAR}
+            </if>
+            <if test="q.sourceDrmType != null">
+                and source_drm_type = #{q.sourceDrmType,jdbcType=VARCHAR}
+            </if>
+            <if test="q.state != null">
+                and state = #{q.state,jdbcType=VARCHAR}
+            </if>
+            <if test="q.systemLayer != null">
+                and system_layer = #{q.systemLayer,jdbcType=VARCHAR}
+            </if>
+            <if test="q.type != null">
+                and `type` = #{q.type,jdbcType=VARCHAR}
+            </if>
+            <if test="q.videoProfile != null">
+                and video_profile = #{q.videoProfile,jdbcType=VARCHAR}
+            </if>
+            <if test="q.videoType != null">
+                and video_type = #{q.videoType,jdbcType=VARCHAR}
+            </if>
+            <if test="q.bizDomain != null">
+                and biz_domain = #{q.bizDomain,jdbcType=VARCHAR}
+            </if>
+            <if test="q.messageId != null">
+                and message_id = #{q.messageId,jdbcType=VARCHAR}
+            </if>
+            <if test="q.storePath != null">
+                and store_path = #{q.storePath,jdbcType=VARCHAR}
+            </if>
+            <if test="q.createTime != null">
+                and create_time = #{q.createTime,jdbcType=TIMESTAMP}
+            </if>
+            <if test="q.updateTime != null">
+                and update_time = #{q.updateTime,jdbcType=TIMESTAMP}
+            </if>
+        </where>
+    </sql>
+
+</mapper>

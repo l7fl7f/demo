@@ -1,0 +1,57 @@
+server:
+  port: 9990
+  servlet:
+    context-path: /springboot
+  tomcat:
+    uri-encoding: UTF-8
+    accesslog:
+      enabled: true
+      pattern: '%h %l %u %t "%r" %s %b %Dms'
+spring:
+  #redis:
+  #host: 120.55.161.125
+  #port: 6379
+  aop:
+    auto: true
+  application:
+    name: smp_local
+  profiles:
+    include: db,mybatis,XssFilter #,multi-datasource  #引入application-db.yml,application-mybatis文件
+  messages:
+    basename: i18n/enum,i18n/menu,i18n/mess,i18n/operation,i18n/tip,i18n/valid
+
+
+web:
+  file-path: C:\EPG3.0\02代码\code\smp\logs\upload
+  lockOperatorHours: 24 # 配置锁定时长，单位小时
+  loginErrorTotal: 5 # 配置失败次数，达到该值就锁定用户
+
+upload:
+  image:
+    file-path: C:\EPG3.0\02代码\code\smp\logs\upload\image
+    max-size: 2 #单位M
+    accept-type:
+      - jpg
+      - png
+      - jpeg
+  file:
+    max-file-size: 20MB
+    max-request-size: 20MB
+c1:
+  receipt-ftp-url: ftp://vuser1:Jiu$y9Ywu*@118.123.60.63:21/ #C1回执ftp地址,已/结束
+  receipt-ftp-URL: ftp://vuser1:Jiu$y9Ywu*@192.168.31.63:21/ #C1回执内网FTP地址,已/结束
+
+userUpload:
+  file-path: /syiptv/tomcat/public/result  #用户推送redis文件存放地址束
+  redis-adress: http://localhost:6500  #redis接口地址
+  file-load-url: http://192.168.31.71:18080 #本机地址
+
+
+#xss攻击拦截
+xss:
+  enabled: true
+  excludes: .js,.gif,.jpg,.png,.css,.ico
+  urlPatterns: /*
+
+params:
+  key: 1

@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- 默认在classpath下查找logback-test.xml，如果没有则查找logback.xml，否则使用默认配置：输出到控制台 -->
+<!-- 
+scan: 当此属性设置为true时，配置文件如果发生改变，将会被重新加载，默认值为true。
+scanPeriod: 设置监测配置文件是否有修改的时间间隔，如果没有给出时间单位，默认单位是毫秒。当scan为true时，此属性生效。默认的时间间隔为1分钟。
+debug: 当此属性设置为true时，将打印出logback内部日志信息，实时查看logback运行状态。默认值为false。
+ -->
+<configuration scan="true" scanPeriod="60 seconds" debug="false">
+	<!-- 定义日志的根目录 -->
+	<property name="LOG_HOME" value="/idea_project/logs/demo" />
+	<property name="APP_Name" value="demo" />
+	<!-- 用来设置上下文名称，每个logger都关联到logger上下文，默认上下文名称为default。但可以使用<contextName>设置成其他名字，用于区分不同应用程序的记录。一旦设置，不能修改。 -->
+	<contextName>${APP_Name}</contextName>
+
+	<include resource="org/springframework/boot/logging/logback/defaults.xml"/>
+	<appender name="CONSOLE" class="ch.qos.logback.core.ConsoleAppender">
+		<filter class="ch.qos.logback.classic.filter.LevelFilter">
+			<level>INFO</level>
+		</filter>
+		<encoder>
+			<pattern>%date [%thread] %-5level [%logger{50}:%line] - %msg%n</pattern>
+			<charset>UTF-8</charset>
+		</encoder>
+	</appender>
+
+	<appender name="LOG" class="ch.qos.logback.core.rolling.RollingFileAppender">
+		<!--滚动策略，按照时间滚动 TimeBasedRollingPolicy-->
+		<rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+			<!--文件路径,定义了日志的切分方式——把每一天的日志归档到一个文件中,以防止日志填满整个磁盘空间-->
+			<FileNamePattern>${LOG_HOME}/%d{yyyy-MM-dd}_%i.log</FileNamePattern>
+			<!--只保留最近180天的日志-->
+			<maxHistory>180</maxHistory>
+			<timeBasedFileNamingAndTriggeringPolicy class="ch.qos.logback.core.rolling.SizeAndTimeBasedFNATP">
+				<!-- 当日志文件超过maxFileSize指定的大小是，根据上面提到的%i进行日志文件滚动 注意此处配置 -->
+				<maxFileSize>100MB</maxFileSize>
+			</timeBasedFileNamingAndTriggeringPolicy>
+		</rollingPolicy>
+		<encoder>
+			<pattern>%date [%thread] %-5level [%logger{50}:%line] - %msg%n</pattern>
+			<charset>UTF-8</charset> <!-- 此处设置字符集 -->
+		</encoder>
+	</appender>
+
+	<logger name="com.iptv.springboot" level="INFO" additivity="false">
+		<!-- 输出到上面配置的对应的输出流中 -->
+		<appender-ref ref="LOG" />
+	</logger>
+
+	<root level="info">
+		<appender-ref ref="CONSOLE"/>
+		<appender-ref ref="LOG"/>
+	</root>
+
+</configuration>

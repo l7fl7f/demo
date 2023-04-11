@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.springboot.c2.dao.MediaServiceMappingDAO">
+  <resultMap id="BaseResultMap" type="com.springboot.c2.entity.MediaServiceMapping">
+    <id column="id" jdbcType="INTEGER" property="id" />
+    <result column="media_id" jdbcType="VARCHAR" property="mediaId" />
+    <result column="media_code" jdbcType="VARCHAR" property="mediaCode" />
+    <result column="service_id" jdbcType="VARCHAR" property="serviceId" />
+    <result column="service_code" jdbcType="VARCHAR" property="serviceCode" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    id, media_id, media_code, service_id, service_code
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from media_service_mapping
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from media_service_mapping
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" keyColumn="id" keyProperty="id" parameterType="com.springboot.c2.entity.MediaServiceMapping" useGeneratedKeys="true">
+    insert into media_service_mapping (media_id, media_code, service_id, 
+      service_code)
+    values (#{mediaId,jdbcType=VARCHAR}, #{mediaCode,jdbcType=VARCHAR}, #{serviceId,jdbcType=VARCHAR}, 
+      #{serviceCode,jdbcType=VARCHAR})
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.springboot.c2.entity.MediaServiceMapping">
+    update media_service_mapping
+    <set>
+      <if test="mediaId != null">
+        media_id = #{mediaId,jdbcType=VARCHAR},
+      </if>
+      <if test="mediaCode != null">
+        media_code = #{mediaCode,jdbcType=VARCHAR},
+      </if>
+      <if test="serviceId != null">
+        service_id = #{serviceId,jdbcType=VARCHAR},
+      </if>
+      <if test="serviceCode != null">
+        service_code = #{serviceCode,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <sql id="whereCondition">
+    <where>
+      <if test="q.mediaId != null">
+         and media_id = #{q.mediaId,jdbcType=VARCHAR}
+      </if>
+      <if test="q.mediaCode != null">
+         and media_code = #{q.mediaCode,jdbcType=VARCHAR}
+      </if>
+      <if test="q.serviceId != null">
+         and service_id = #{q.serviceId,jdbcType=VARCHAR}
+      </if>
+      <if test="q.serviceCode != null">
+         and service_code = #{q.serviceCode,jdbcType=VARCHAR}
+      </if>
+    </where>
+  </sql>
+  <select id="query" parameterType="com.springboot.c2.utils.ModelSetup" resultMap="BaseResultMap">
+     select <include refid="Base_Column_List" /> from media_service_mapping
+    <include refid="whereCondition" />
+  </select>
+  <select id="count" parameterType="com.springboot.c2.utils.ModelSetup" resultType="java.lang.Integer">
+     select count(1) from media_service_mapping
+    <include refid="whereCondition" />
+  </select>
+  <select id="selectAll" parameterType="com.springboot.c2.utils.ModelSetup" resultMap="BaseResultMap">
+     select <include refid="Base_Column_List" /> from media_service_mapping
+    <include refid="whereCondition" />
+  </select>
+  <delete id="deleteByPrimaryKeys" parameterType="java.lang.Integer">
+    delete from media_service_mapping where id in 
+    <foreach item="id" index="index" collection="array" open="(" separator="," close=")">
+    #{id}
+    </foreach>
+  </delete>
+</mapper>

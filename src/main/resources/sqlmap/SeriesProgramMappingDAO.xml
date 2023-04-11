@@ -1,0 +1,114 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.springboot.c2.dao.SeriesProgramMappingDAO">
+    <resultMap id="BaseResultMap" type="com.springboot.c2.entity.SeriesProgramMapping">
+        <result column="id" jdbcType="VARCHAR" property="id"/>
+        <result column="domain_type" jdbcType="VARCHAR" property="domainType"/>
+        <result column="element_type" jdbcType="VARCHAR" property="elementType"/>
+        <result column="episode_code" jdbcType="VARCHAR" property="episodeCode"/>
+        <result column="episode_id" jdbcType="VARCHAR" property="episodeId"/>
+        <result column="provider" jdbcType="VARCHAR" property="provider"/>
+        <result column="sequence" jdbcType="VARCHAR" property="sequence"/>
+        <result column="series_code" jdbcType="VARCHAR" property="seriesCode"/>
+        <result column="series_id" jdbcType="VARCHAR" property="seriesId"/>
+        <result column="status" jdbcType="VARCHAR" property="status"/>
+        <result column="create_time" jdbcType="TIMESTAMP" property="createTime"/>
+        <result column="update_time" jdbcType="TIMESTAMP" property="updateTime"/>
+    </resultMap>
+
+    <sql id="Base_Column_List">
+        id,domain_type,element_type,episode_code,episode_id,provider,sequence,series_code,series_id,status,
+        create_time,update_time
+    </sql>
+
+    <insert id="insert" parameterType="com.springboot.c2.entity.SeriesProgramMapping">
+        insert into series_program_mapping (id,domain_type,element_type,episode_code,episode_id,provider,sequence,series_code,series_id,status,
+        create_time,update_time)
+        values (#{id,jdbcType=VARCHAR}, #{domainType,jdbcType=VARCHAR}, #{elementType,jdbcType=VARCHAR}, #{episodeCode,jdbcType=VARCHAR},
+        #{episodeId,jdbcType=VARCHAR}, #{provider,jdbcType=VARCHAR}, #{sequence,jdbcType=VARCHAR}, #{seriesCode,jdbcType=VARCHAR},
+        #{seriesId,jdbcType=VARCHAR}, #{status,jdbcType=VARCHAR}, #{createTime,jdbcType=TIMESTAMP}, #{updateTime,jdbcType=TIMESTAMP})
+    </insert>
+
+    <delete id="delete" parameterType="java.util.Map">
+        delete from series_program_mapping where episode_code = #{episodeCode,jdbcType=VARCHAR} and series_code = #{seriesCode,jdbcType=VARCHAR}
+    </delete>
+
+    <select id="count" parameterType="com.springboot.c2.utils.ModelSetup" resultType="java.lang.Integer">
+        select count(1) from series_program_mapping
+        <include refid="whereCondition"/>
+    </select>
+
+    <select id="query" parameterType="com.springboot.c2.utils.ModelSetup" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from series_program_mapping
+        <include refid="whereCondition"/>
+    </select>
+
+    <select id="selectAll" resultMap="BaseResultMap" parameterType="com.springboot.c2.utils.ModelSetup">
+        select
+        <include refid="Base_Column_List"/>
+        from series_program_mapping
+        <include refid="whereCondition"/>
+    </select>
+
+    <update id="update" parameterType="com.springboot.c2.entity.SeriesProgramMapping">
+        update series_program_mapping
+        <set>
+            <if test="sequence != null">
+                sequence = #{sequence,jdbcType=VARCHAR},
+            </if>
+            <if test="status != null">
+                status = #{status,jdbcType=VARCHAR},
+            </if>
+            update_time = now()
+        </set>
+        where episode_code = #{episodeCode,jdbcType=VARCHAR} and series_code = #{seriesCode,jdbcType=VARCHAR}
+    </update>
+
+    <sql id="whereCondition">
+        <where>
+            <if test="q.id != null">
+                and id = #{q.id,jdbcType=VARCHAR}
+            </if>
+            <if test="q.domainType != null">
+                and domain_type = #{q.domainType,jdbcType=VARCHAR}
+            </if>
+            <if test="q.elementType != null">
+                and element_type = #{q.elementType,jdbcType=VARCHAR}
+            </if>
+            <if test="q.episodeCode != null">
+                and episode_code = #{q.episodeCode,jdbcType=VARCHAR}
+            </if>
+            <if test="q.episodeId != null">
+                and episode_id = #{q.episodeId,jdbcType=VARCHAR}
+            </if>
+            <if test="q.provider != null">
+                and provider = #{q.provider,jdbcType=VARCHAR}
+            </if>
+            <if test="q.sequence != null">
+                and sequence = #{q.sequence,jdbcType=VARCHAR}
+            </if>
+            <if test="q.seriesCode != null">
+                and series_code = #{q.seriesCode,jdbcType=VARCHAR}
+            </if>
+            <if test="q.seriesId != null">
+                and series_id = #{q.seriesId,jdbcType=VARCHAR}
+            </if>
+            <if test="q.status != null">
+                and status = #{q.status,jdbcType=VARCHAR}
+            </if>
+            <if test="q.createTime != null">
+                and create_time = #{q.createTime,jdbcType=TIMESTAMP}
+            </if>
+            <if test="q.updateTime != null">
+                and update_time = #{q.updateTime,jdbcType=TIMESTAMP}
+            </if>
+        </where>
+    </sql>
+
+    <select id="getCurSerial" parameterType="java.lang.String" resultType="java.lang.String">
+        select sequence from series_program_mapping where series_code = #{seriesCode,jdbcType=VARCHAR} order by sequence*1 desc limit 1
+    </select>
+
+</mapper>
