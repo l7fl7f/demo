@@ -1,6 +1,5 @@
-package com.springboot.read_file;
+package com.springboot.readfile;
 
-import org.apache.commons.lang3.StringUtils;
 import org.apache.poi.hssf.usermodel.HSSFWorkbook;
 import org.apache.poi.ss.usermodel.Sheet;
 import org.apache.poi.ss.usermodel.Workbook;
@@ -9,7 +8,7 @@ import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import java.io.*;
 import java.util.List;
 
-public class ExcelRead7_area_phone {
+public class ExcelRead6_live_rtp {
     public static List<List<String>> readExcel(String path) {
         // 读取excel文件
         InputStream is = null;
@@ -29,28 +28,21 @@ public class ExcelRead7_area_phone {
             // 读取第一个工作页sheet
             Sheet sheet = wb.getSheetAt(0);
             // 循环行
-            File f1 = new File("C:\\Users\\lqf\\Desktop\\insert.txt");
+            File f1 = new File("C:\\Users\\lqf\\Desktop\\hw_live.txt");
             if (f1.exists()==false){
                 f1.getParentFile().mkdirs();
             }
             // 创建基于文件的输出流
             FileWriter writer1 = new FileWriter(f1);
             for (int i = 0; i < sheet.getPhysicalNumberOfRows(); i++) {
-                if (null != sheet.getRow(i).getCell(0)) {
-                    String phone = sheet.getRow(i).getCell(0).toString();
-                    if (phone.endsWith(".0")) {
-                        phone = phone.substring(0, phone.indexOf(".0"));
-                    }
-                    String areaCode = sheet.getRow(i).getCell(1).toString();
-                    if (areaCode.endsWith(".0")) {
-                        areaCode = areaCode.substring(0, areaCode.indexOf(".0"));
-                    }
-                    String areaName = sheet.getRow(i).getCell(2).toString();
-                    areaName = areaName.trim();
-                    String sql = "INSERT INTO `area_phone_map`(`phonePrefix`, `areaCode`, `areaName`) " +
-                            "VALUES ('"+phone+"', '"+areaCode+"', '"+areaName+"');\n";
-                    writer1.write(sql);
-                }
+                String param1 = sheet.getRow(i).getCell(1).toString();
+                String param2 = sheet.getRow(i).getCell(2).toString();
+                String param3 = sheet.getRow(i).getCell(3).toString();
+                Integer param4 = (int)sheet.getRow(i).getCell(4).getNumericCellValue();
+                Integer param5 = (int)sheet.getRow(i).getCell(5).getNumericCellValue();
+                String sql = "INSERT INTO `smp_iptv`.`category`(`category_id`, `category_code`, `title`, `category_type`, `pid`, `pcode`, `cp_id`, `status`, `sequence`, `description`, `announce`, `url`, `leaf`, `view_url`, `special_type`, `start_time`, `end_time`, `create_time`, `modify_time`, `biz_domain`) " +
+                        "VALUES ('livechannel"+param5+param2+"', 'livechannel"+param5+param2+"', '"+param1+"', '1', 'livearea"+param5+"', 'livearea"+param5+"', '20001082', '0', '1', 'rtp://"+param3+":"+param4+"', '1', '', '0', NULL, '0', '2022-04-19 10:18:05', '2099-12-31 23:59:59', '2022-04-19 10:18:05', '2022-04-19 10:18:05', '0');\n";
+                writer1.write(sql);
             }
             writer1.flush();
         } catch (IOException e) {
@@ -68,6 +60,6 @@ public class ExcelRead7_area_phone {
     }
 
     public static void main(String[] args) {
-        ExcelRead7_area_phone.readExcel("C:\\Users\\lqf\\Desktop\\四川2022年第1批CDMA网H码汇总表-20220805.xlsx");
+        ExcelRead6_live_rtp.readExcel("C:\\Users\\lqf\\Desktop\\hw_live.xlsx");
     }
 }

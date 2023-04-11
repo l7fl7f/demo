@@ -1,4 +1,4 @@
-package com.springboot.read_file;
+package com.springboot.readfile;
 
 import org.apache.poi.hssf.usermodel.HSSFWorkbook;
 import org.apache.poi.ss.usermodel.Sheet;
@@ -8,7 +8,7 @@ import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import java.io.*;
 import java.util.List;
 
-public class ExcelRead5 {
+public class ExcelRead4 {
     public static List<List<String>> readExcel(String path) {
         // 读取excel文件
         InputStream is = null;
@@ -28,7 +28,7 @@ public class ExcelRead5 {
             // 读取第一个工作页sheet
             Sheet sheet = wb.getSheetAt(0);
             // 循环行
-            File f1 = new File("C:\\Users\\lqf\\Desktop\\delete_search_20220726.txt");
+            File f1 = new File("C:\\Users\\lqf\\Desktop\\20002038.sql");
             if (f1.exists()==false){
                 f1.getParentFile().mkdirs();
             }
@@ -36,10 +36,13 @@ public class ExcelRead5 {
             FileWriter writer1 = new FileWriter(f1);
             for (int i = 0; i < sheet.getPhysicalNumberOfRows(); i++) {
                 // 循环列
-                if (null != sheet.getRow(i).getCell(2)) {
-                    String id = sheet.getRow(i).getCell(2).toString();
-                    String sql = "curl -XPOST http://192.168.57.34:9200/content/contentInfo/_delete_by_query?pretty -H 'Content-Type:application/json' -d '{ \"query\": {\"bool\": {\"must\": {\"term\" : {\"Code\": {\"value\":\"" + id + "\"}}}}}}';\n";
-                    writer1.write(sql);
+                if (null != sheet.getRow(i).getCell(0)) {
+                    String param1 = sheet.getRow(i).getCell(0).toString();
+                    String param2 = sheet.getRow(i).getCell(1).toString();
+                    String sql = "update url_vod set media_id = '"+param1+"', media_code = '"+param1+"' where movie_code = '"+param2+"' and ((media_code is null or media_code = '') and program_id is null);\n";
+                    String sql1 = "INSERT INTO `smp_iptv`.`url_vod`(`id`, `movie_id`, `movie_code`, `media_id`, `media_code`, `program_id`, `screen_code`, `type`, `url`, `serial`, `source_drm_type`, `dest_drm_type`, `audio_type`, `screen_format`, `closed_captioning`, `duration`, `file_size`, `bitrate`, `video_type`, `audio_format`, `resolution`, `video_profile`, `video_format`, `service_type`, `movie_head_duration`, `movie_tail_duration`, `provider_id`, `thumbnail_url`, `image_url`, `title`, `description`, `area_id`, `release_time`, `create_time`, `modify_time`, `biz_domain`) " +
+                            "VALUES ('import_20210413_"+param2+"', '"+param2+"', '"+param2+"', '"+param1+"', '"+param1+"', NULL, NULL, '1', NULL, '1', '0', '0', '0', '0', '0', '010000', '9999', '1', '1', '1', '1', '1', '1.ts', '0x01', NULL, NULL, '20002038', NULL, NULL, '不要', NULL, NULL, NULL, '2021-04-13 00:00:00', '2021-04-13 00:00:00', '0');\n";
+                    writer1.write(sql1);
                 }
             }
             writer1.flush();
@@ -58,6 +61,6 @@ public class ExcelRead5 {
     }
 
     public static void main(String[] args) {
-        ExcelRead5.readExcel("C:\\Users\\lqf\\Desktop\\111.xlsx");
+        ExcelRead4.readExcel("C:\\Users\\lqf\\Desktop\\20002038.xlsx");
     }
 }

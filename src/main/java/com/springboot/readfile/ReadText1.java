@@ -1,4 +1,4 @@
-package com.springboot.read_file;
+package com.springboot.readfile;
 
 import java.io.*;
 

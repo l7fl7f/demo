@@ -1,4 +1,4 @@
-package com.springboot.throwableTest;
+package com.springboot.throwabletest;
 
 public class ControllerTest {
     public int test1(int i, int j) {
