@@ -7,7 +7,7 @@ debug: 当此属性设置为true时，将打印出logback内部日志信息，�
  -->
 <configuration scan="true" scanPeriod="60 seconds" debug="false">
 	<!-- 定义日志的根目录 -->
-	<property name="LOG_HOME" value="/idea_project/logs/demo" />
+	<property name="LOG_HOME" value="/logs/demo" />
 	<property name="APP_Name" value="demo" />
 	<!-- 用来设置上下文名称，每个logger都关联到logger上下文，默认上下文名称为default。但可以使用<contextName>设置成其他名字，用于区分不同应用程序的记录。一旦设置，不能修改。 -->
 	<contextName>${APP_Name}</contextName>

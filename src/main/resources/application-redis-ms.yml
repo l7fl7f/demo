@@ -1,0 +1,21 @@
+spring:
+  redis:
+    sentinel:
+      master: syiptv01
+      nodes: 192.168.57.26:26379,192.168.57.27:26379,192.168.57.13:26379
+    host: 192.168.57.26
+    port: 26379
+    timeout: 0
+    password: Sc1sMp0iPtV2Dx
+    database: 0
+    max-active: 8
+    max-wait: -1
+    maxIdle: 8
+    minIdle: 0
+    maxTotal: 8
+    maxWaitMillis:
+    minEvictableIdleTimeMillis:
+    numTestsPerEvictionRun:
+    timeBetweenEvictionRunsMillis:
+    testOnBorrow:
+    testWhileIdle:
